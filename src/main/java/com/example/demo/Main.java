@@ -1,5 +1,4 @@
 package com.example.demo;
-
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -13,7 +12,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.shape.Rectangle;
-
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -24,16 +22,29 @@ public class Main extends Application {
     private Scene gameScene = new Scene(gameRoot, WIDTH, HEIGHT, Color.rgb(189, 177, 92));
     private static Scanner input= new Scanner(System.in);
 
+    /**
+     * @param gameScene setting the game scene, where the WIDTH, HEIGHT is passed from gameScene
+     */
     public void setGameScene(Scene gameScene) {
         this.gameScene = gameScene;
     }
-
     public void setGameRoot(Group gameRoot) {
         this.gameRoot = gameRoot;
     }
+//    @Override
+//    public void stop() {
+//        gamePane.getGameManager().saveRecord();
+//    }
 
+    /**
+     * @param primaryStage h
+     * @throws Exception j
+     */
     @Override
+
     public void start(Stage primaryStage) throws Exception {
+        Button button = new Button("change");
+//        button.setOnAction(e ->button.getScene().getStylesheets().set(0, "1.css"));
 
         Group menuRoot = new Group();
         Scene menuScene = new Scene(menuRoot, WIDTH, HEIGHT);
