@@ -53,25 +53,39 @@ class GameScene extends Directions {
         scoreText.setFont(Font.font(20));
         scoreText.setText("0");
 
-//        Button pauseButton = new Button("PAUSE");
-//        pauseButton.setPrefSize(100,30);
-//        pauseButton.setTextFill(Color.BLACK);
-//        root.getChildren().add(pauseButton);
-//        pauseButton.relocate(250,750);
-//        pauseButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//                alert.setTitle("PAUSE");
-//                alert.setHeaderText("Quit from this page");
-//                alert.setContentText("Are you sure?");
-//
-//                Optional<ButtonType> result = alert.showAndWait();
-//                if (result.get() == ButtonType.OK){
-//                    root.getChildren().clear();
-//                }
-//            }
-//        });
+        randomFillNumber(1);
+        randomFillNumber(1);
+        gameScene.addEventHandler(KeyEvent.KEY_PRESSED, key ->{
+                Platform.runLater(() -> {
+                    int haveEmptyCell;
+                    if (key.getCode() == KeyCode.DOWN) {
+                        GameScene.this.moveDown();
+                    } else if (key.getCode() == KeyCode.UP) {
+                        GameScene.this.moveUp();
+                    } else if (key.getCode() == KeyCode.LEFT) {
+                        GameScene.this.moveLeft();
+                    } else if (key.getCode() == KeyCode.RIGHT) {
+                        GameScene.this.moveRight();
+                    }
+                    GameScene.this.sumCellNumbersToScore();
+                    scoreText.setText(score + "");
+                    haveEmptyCell = GameScene.this.haveEmptyCell();
+                    if (haveEmptyCell == -1) {
+                        if (GameScene.this.canNotMove()) {
+                            primaryStage.setScene(endGameScene);
+
+                            EndGame.getInstance().endGameShow(endGameScene, endGameRoot, primaryStage, score);
+                            root.getChildren().clear();
+                            score = 0;
+                        }
+                    } else if(haveEmptyCell == 1)
+                        GameScene.this.randomFillNumber(2);
+                });
+            });
+    }
+}
+
+
 
 
 //        Button tryAgainButton = new Button("TRY AGAIN");
@@ -133,39 +147,3 @@ class GameScene extends Directions {
 //                }
 //            }
 //        });
-
-
-
-
-
-        randomFillNumber(1);
-        randomFillNumber(1);
-        gameScene.addEventHandler(KeyEvent.KEY_PRESSED, key ->{
-                Platform.runLater(() -> {
-                    int haveEmptyCell;
-                    if (key.getCode() == KeyCode.DOWN) {
-                        GameScene.this.moveDown();
-                    } else if (key.getCode() == KeyCode.UP) {
-                        GameScene.this.moveUp();
-                    } else if (key.getCode() == KeyCode.LEFT) {
-                        GameScene.this.moveLeft();
-                    } else if (key.getCode() == KeyCode.RIGHT) {
-                        GameScene.this.moveRight();
-                    }
-                    GameScene.this.sumCellNumbersToScore();
-                    scoreText.setText(score + "");
-                    haveEmptyCell = GameScene.this.haveEmptyCell();
-                    if (haveEmptyCell == -1) {
-                        if (GameScene.this.canNotMove()) {
-                            primaryStage.setScene(endGameScene);
-
-                            EndGame.getInstance().endGameShow(endGameScene, endGameRoot, primaryStage, score);
-                            root.getChildren().clear();
-                            score = 0;
-                        }
-                    } else if(haveEmptyCell == 1)
-                        GameScene.this.randomFillNumber(2);
-                });
-            });
-    }
-}
