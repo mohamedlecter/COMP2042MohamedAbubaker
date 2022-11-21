@@ -4,9 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.example.demo.modle.InfoLable;
+import com.example.demo.modle.MenuSubScene;
+import com.example.demo.modle.THEME;
+import com.example.demo.modle.ThemePicker;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
@@ -14,14 +20,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 
 
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -37,14 +39,85 @@ public class viewManager {
     private final static int MENU_BUTTON_START_Y = 150;
 
     private final String BUTTON_STYLE = "-fx-background-color: blue; -fx-background-image: url('src/main/java/com/example/demo/resources/red_button.png');";
+    private MenuSubScene creditsSubScene;
+    private MenuSubScene helpSubScene;
+    private MenuSubScene scoreSubScene;
+    private MenuSubScene themeChooserSubScene;
 
-    List<Button> menuButtons;
+
+    private  MenuSubScene sceneToHide;
+
+    List<ThemePicker> themeList;
+    private THEME chosenTheme;
+
+
     public viewManager (){
         mainPane = new AnchorPane();
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);
         mainStage = new Stage();
         mainStage.setScene(mainScene);
+        createSubScenes();
         createBtns();
+    }
+
+    private void showSubScene(MenuSubScene subScene){
+        if(sceneToHide !=null){
+            sceneToHide.moveSubScene();
+        }
+        subScene.moveSubScene();
+        sceneToHide = subScene;
+    }
+
+    private void createSubScenes(){
+        creditsSubScene = new MenuSubScene();
+        mainPane.getChildren().add(creditsSubScene);
+
+        helpSubScene = new MenuSubScene();
+        mainPane.getChildren().add(helpSubScene);
+
+        scoreSubScene = new MenuSubScene();
+        mainPane.getChildren().add(scoreSubScene);
+
+        createThemeSubScene();
+
+    }
+
+    private void createThemeSubScene(){
+        themeChooserSubScene = new MenuSubScene();
+        mainPane.getChildren().add(themeChooserSubScene);
+
+        InfoLable chooseThemeLable = new InfoLable("CHOOSE YOUR THEME");
+        chooseThemeLable.setLayoutX(110);
+        chooseThemeLable.setLayoutY(25);
+
+        themeChooserSubScene.getPane().getChildren().add(chooseThemeLable);
+        themeChooserSubScene.getPane().getChildren().add(createThemes());
+
+    }
+
+    private HBox createThemes(){
+        HBox box = new HBox();
+        box.setSpacing(20);
+        themeList = new ArrayList<>();
+        for (THEME theme: THEME.values()){
+            ThemePicker themeTopick = new ThemePicker(theme);
+            box.getChildren().add(themeTopick);
+            themeTopick.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    for (ThemePicker them : themeList){
+                        // if one of the themes is clicked, it will set to not chosen
+                        them.setIsCircleChoosen(false);
+                    }
+                    // but theme to pick will be set to true
+                    themeTopick.setIsCircleChoosen(true);
+                    chosenTheme = themeTopick.getTheme();
+                }
+            });
+        }
+        box.setLayoutX(300 - (120 *2));
+        box.setLayoutY(100);
+        return box;
     }
 
     public Stage getMainStage(){
@@ -107,6 +180,13 @@ public class viewManager {
                 }
             }
         });
+
+       button.setOnAction(new EventHandler<ActionEvent>() {
+           @Override
+           public void handle(ActionEvent actionEvent) {
+              showSubScene(themeChooserSubScene);
+           }
+       });
         mainPane.getChildren().add(button);
     }
     private void createScoreButton(){
@@ -133,6 +213,12 @@ public class viewManager {
                 if(event.getButton().equals(MouseButton.PRIMARY)) {
                     setButtonReleasedStyle(button);
                 }
+            }
+        });
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+              showSubScene(scoreSubScene);
             }
         });
         mainPane.getChildren().add(button);
@@ -163,6 +249,13 @@ public class viewManager {
                 }
             }
         });
+
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+               showSubScene(helpSubScene);
+            }
+        });
         mainPane.getChildren().add(button);
     }
     private void createCreditsButton(){
@@ -191,6 +284,13 @@ public class viewManager {
                 }
             }
         });
+
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                showSubScene(creditsSubScene);
+            }
+        });
         mainPane.getChildren().add(button);
     }
     private void createExitButton(){
@@ -217,6 +317,12 @@ public class viewManager {
                 if(event.getButton().equals(MouseButton.PRIMARY)) {
                     setButtonReleasedStyle(button);
                 }
+            }
+        });
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                mainStage.close();
             }
         });
         mainPane.getChildren().add(button);
