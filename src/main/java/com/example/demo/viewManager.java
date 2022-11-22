@@ -38,7 +38,7 @@ public class viewManager {
     private final static int MENU_BUTTON_START_X = 100;
     private final static int MENU_BUTTON_START_Y = 150;
 
-    private final String BUTTON_STYLE = "-fx-background-color: blue; -fx-background-image: url('src/main/java/com/example/demo/resources/red_button.png');";
+    private final String BUTTON_STYLE = "-fx-background-color: black; -fx-text-fill: white";
     private MenuSubScene creditsSubScene;
     private MenuSubScene helpSubScene;
     private MenuSubScene scoreSubScene;
@@ -53,6 +53,7 @@ public class viewManager {
 
     public viewManager (){
         mainPane = new AnchorPane();
+        mainPane.setStyle("-fx-background-color: white;");
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);
         mainStage = new Stage();
         mainStage.setScene(mainScene);
@@ -92,6 +93,7 @@ public class viewManager {
 
         themeChooserSubScene.getPane().getChildren().add(chooseThemeLable);
         themeChooserSubScene.getPane().getChildren().add(createThemes());
+        themeChooserSubScene.getPane().getChildren().add(startBtn());
 
     }
 
@@ -101,6 +103,7 @@ public class viewManager {
         themeList = new ArrayList<>();
         for (THEME theme: THEME.values()){
             ThemePicker themeTopick = new ThemePicker(theme);
+            themeList.add(themeTopick);
             box.getChildren().add(themeTopick);
             themeTopick.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -119,22 +122,30 @@ public class viewManager {
         box.setLayoutY(100);
         return box;
     }
+    private Button startBtn(){
+        Button button = new Button("START");
+        button.setLayoutX(400);
+        button.setLayoutY(350);
+        button.setStyle(BUTTON_STYLE);
+        button.setFont(Font.font("verdana", 23));
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if (chosenTheme != null){
+                    GameViewManager gameManager = new GameViewManager();
+                    gameManager.createNewGame(mainStage, chosenTheme);
+                }
+            }
+        });
+        return button;
+    }
 
     public Stage getMainStage(){
         return mainStage;
     }
 
-    private void addMenuButtons(Button button){
-        button.setLayoutX(MENU_BUTTON_START_X);
-        button.setLayoutY(MENU_BUTTON_START_Y + 5 * 100);
-        button.setPrefWidth(150);
-        button.setPrefHeight(49);
-        button.setStyle(BUTTON_STYLE);
-        button.setFont(Font.font("verdana", 23));
-        mainPane.getChildren().add(button);
-    }
         private void setButtonPressedStyle(Button button) {
-        String BUTTON_PRESSED_STYLE = "-fx-background-color: red; -fx-background-image: url('/resources/red_button_pressed.png');";
+        String BUTTON_PRESSED_STYLE = "-fx-background-color: green;";
         button.setStyle(BUTTON_PRESSED_STYLE);
         button.setPrefHeight(45);
 //        button.setLayoutY(button.getLayoutY() + 4);
@@ -197,7 +208,6 @@ public class viewManager {
         button.setPrefHeight(49);
         button.setStyle(BUTTON_STYLE);
         button.setFont(Font.font("verdana", 23));
-        button.setFont(Font.font("verdana", 23));
         button.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -230,7 +240,6 @@ public class viewManager {
         button.setPrefWidth(150);
         button.setPrefHeight(49);
         button.setStyle(BUTTON_STYLE);
-        button.setFont(Font.font("verdana", 23));
         button.setFont(Font.font("verdana", 23));
         button.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override

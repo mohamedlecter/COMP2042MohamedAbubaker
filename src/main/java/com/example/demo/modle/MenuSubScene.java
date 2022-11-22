@@ -15,7 +15,7 @@ public class MenuSubScene extends SubScene{
         prefHeight(400);
 
         AnchorPane root2 = (AnchorPane) this.getRoot();
-        root2.setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
+        root2.setBackground(new Background(new BackgroundFill(Color.rgb(180, 80, 44, 0.7), null, null)));
 
         isHidden = true ;
 
