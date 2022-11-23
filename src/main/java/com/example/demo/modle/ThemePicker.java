@@ -1,11 +1,15 @@
 package com.example.demo.modle;
 
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.nio.Buffer;
+
 public class ThemePicker extends VBox {
+    private final Button button;
     private ImageView circleImage;
     private ImageView themeImage;
 
@@ -17,15 +21,15 @@ public class ThemePicker extends VBox {
     private boolean isCircleChoosen;
 
 
-    public ThemePicker(THEME theme) {
+    public ThemePicker(Button button) {
         circleImage = new ImageView(circleNotChoosen);
-        themeImage = new ImageView(theme.getUrl());
-        this.theme = theme;
+//        themeImage = new ImageView(theme.getUrl());
+        this.button = button;
         isCircleChoosen = false;
         this.setAlignment(Pos.CENTER);
         this.setSpacing(20);
         this.getChildren().add(circleImage);
-        this.getChildren().add(themeImage);
+//        this.getChildren().add(themeImage);
 
     }
 

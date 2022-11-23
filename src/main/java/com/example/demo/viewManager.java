@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -82,6 +83,7 @@ public class viewManager {
         scoreSubScene = new MenuSubScene();
         mainPane.getChildren().add(scoreSubScene);
 
+//        createAccountSubScene();
         createThemeSubScene();
         createHelpSubScene();
         createCreditsSubScene();
@@ -92,13 +94,83 @@ public class viewManager {
         themeChooserSubScene = new MenuSubScene();
         mainPane.getChildren().add(themeChooserSubScene);
 
-        InfoLable chooseThemeLable = new InfoLable("CHOOSE YOUR THEME");
-        chooseThemeLable.setLayoutX(120);
-        chooseThemeLable.setLayoutY(25);
+        InfoLable helpLabel = new InfoLable("LOGIN");
+        helpLabel.setLayoutX(120);
+        helpLabel.setLayoutY(20);
 
-        themeChooserSubScene.getPane().getChildren().add(chooseThemeLable);
-        themeChooserSubScene.getPane().getChildren().add(createThemes());
+        //Creating a GridPane container
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setVgap(5);
+        grid.setHgap(5);
+        grid.setLayoutX(150);
+        grid.setLayoutY(80);
+        //Defining the Name text field
+        final TextField name = new TextField();
+        name.setPromptText("Enter your first name.");
+        name.setPrefColumnCount(10);
+        name.getText();
+        GridPane.setConstraints(name, 0, 0);
+        grid.getChildren().add(name);
+        //Defining the Last Name text field
+        final TextField lastName = new TextField();
+        lastName.setPromptText("Enter your last name.");
+        GridPane.setConstraints(lastName, 0, 1);
+        grid.getChildren().add(lastName);
+        //Defining the Submit button
+        Button submit = new Button("Submit");
+        GridPane.setConstraints(submit, 1, 0);
+        grid.getChildren().add(submit);
+        //Defining the Clear button
+        Button clear = new Button("Clear");
+        GridPane.setConstraints(clear, 1, 1);
+
+        //Adding a Label
+        final Label label = new Label();
+        GridPane.setConstraints(label, 0, 3);
+        GridPane.setColumnSpan(label, 2);
+        grid.getChildren().add(label);
+
+        //Setting an action for the Submit button
+//        submit.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent e) {
+//
+//            }
+//        });
+
+        //Setting an action for the Clear button
+        clear.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                name.clear();
+                lastName.clear();
+                label.setText(null);
+            }
+        });
+        grid.getChildren().add(clear);
+        themeChooserSubScene.getPane().getChildren().addAll(helpLabel,grid);
         themeChooserSubScene.getPane().getChildren().add(startBtn());
+
+    }
+
+    private void createAccountSubScene(){
+        helpSubScene = new MenuSubScene();
+        mainPane.getChildren().add(helpSubScene);
+
+        InfoLable helpLabel = new InfoLable("LOGIN");
+        helpLabel.setLayoutX(120);
+        helpLabel.setLayoutY(20);
+
+        Label text = new Label("Name: ");
+        text.setFont(Font.font(20));
+        text.setLayoutX(50);
+        text.setLayoutY(80);
+        text.setWrapText(true);
+
+        TextField textField = new TextField();
+
+        helpSubScene.getPane().getChildren().addAll(helpLabel, text, textField);
 
     }
 
@@ -106,9 +178,9 @@ public class viewManager {
         helpSubScene = new MenuSubScene();
         mainPane.getChildren().add(helpSubScene);
 
-        InfoLable helpLable = new InfoLable("HELP");
-        helpLable.setLayoutX(120);
-        helpLable.setLayoutY(20);
+        InfoLable helpLabel = new InfoLable("HELP");
+        helpLabel.setLayoutX(120);
+        helpLabel.setLayoutY(20);
 
         Label text = new Label("Basically, 2048 presents with with a 4×4 grid. When you start the game, there will be two “tiles” on the grid, each displaying the number 2 or 4. You hit the arrow keys on your keyboard to move the tiles around — and also to generate new tiles, which will also be valued at 2 or 4. When two equal tiles collide, they combine to give you one greater tile that displays their sum. The more you do this, obviously, the higher the tiles get and the more crowded the board becomes. Your objective is to reach 2048 before the board fills up.");
         text.setFont(Font.font(20));
@@ -119,7 +191,7 @@ public class viewManager {
         text.setWrapText(true);
         text.setAlignment(Pos.CENTER);
 
-        helpSubScene.getPane().getChildren().addAll(helpLable, text);
+        helpSubScene.getPane().getChildren().addAll(helpLabel, text);
 
     }
 
@@ -127,9 +199,9 @@ public class viewManager {
         creditsSubScene = new MenuSubScene();
         mainPane.getChildren().add(creditsSubScene);
 
-        InfoLable creditsLable = new InfoLable("Credits ");
-        creditsLable.setLayoutX(120);
-        creditsLable.setLayoutY(20);
+        InfoLable creditsLabel = new InfoLable("Credits ");
+        creditsLabel.setLayoutX(120);
+        creditsLabel.setLayoutY(20);
 
         Label credit0 = new Label("Programmed by Mohamed Abubaker Mohamed Ahmed - 20302059.");
         Label credit1 = new Label("Sounds and images from ");
@@ -158,7 +230,7 @@ public class viewManager {
 
         creditsBox.setLayoutX(50);
         creditsBox.setLayoutY(80);
-        creditsSubScene.getPane().getChildren().addAll(creditsLable, creditsBox);
+        creditsSubScene.getPane().getChildren().addAll(creditsLabel, creditsBox);
 
         Application app = new Application() {@Override public void start(Stage primaryStage) throws Exception{}};
         HostServices services = app.getHostServices();
@@ -181,24 +253,38 @@ public class viewManager {
     private HBox createThemes(){
         HBox box = new HBox();
         box.setSpacing(20);
+        Button blackBtn = new Button("Black");
+        Button whiteBtn = new Button("White");
+        ThemePicker themeTopick = new ThemePicker(blackBtn);
         themeList = new ArrayList<>();
-        for (THEME theme: THEME.values()){
-            ThemePicker themeTopick = new ThemePicker(theme);
-            themeList.add(themeTopick);
-            box.getChildren().add(themeTopick);
-            themeTopick.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    for (ThemePicker them : themeList){
-                        // if one of the themes is clicked, it will set to not chosen
-                        them.setIsCircleChoosen(false);
-                    }
-                    // but theme to pick will be set to true
-                    themeTopick.setIsCircleChoosen(true);
-                    chosenTheme = themeTopick.getTheme();
+
+        blackBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                for (ThemePicker them : themeList){
+                    // if one of the themes is clicked, it will set to not chosen
+                    them.setIsCircleChoosen(false);
                 }
-            });
-        }
+                // but theme to pick will be set to true
+                themeTopick.setIsCircleChoosen(true);
+                chosenTheme = themeTopick.getTheme();
+            }
+        });
+
+        whiteBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                for (ThemePicker them : themeList){
+                    // if one of the themes is clicked, it will set to not chosen
+                    them.setIsCircleChoosen(false);
+                }
+                // but theme to pick will be set to true
+                themeTopick.setIsCircleChoosen(true);
+                chosenTheme = themeTopick.getTheme();
+            }
+        });
+        box.getChildren().addAll(blackBtn, whiteBtn);
+
         box.setLayoutX(300 - (120 *2));
         box.setLayoutY(100);
         return box;
@@ -212,10 +298,12 @@ public class viewManager {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                if (chosenTheme != null){
-                    GameViewManager gameManager = new GameViewManager();
-                    gameManager.createNewGame(mainStage, chosenTheme);
-                }
+//                if (chosenTheme != null){
+//                    GameViewManager gameManager = new GameViewManager();
+//                    gameManager.createNewGame(mainStage, chosenTheme);
+//                }
+                GameViewManager gameManager = new GameViewManager();
+                gameManager.createNewGame(mainStage, chosenTheme);
             }
         });
         return button;
