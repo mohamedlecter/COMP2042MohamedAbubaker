@@ -44,9 +44,7 @@ public class viewManager {
     private MenuSubScene scoreSubScene;
     private MenuSubScene themeChooserSubScene;
 
-
     private  MenuSubScene sceneToHide;
-
     List<ThemePicker> themeList;
     private THEME chosenTheme;
 
