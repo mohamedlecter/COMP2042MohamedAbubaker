@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.modle.InfoLable;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.*;
@@ -7,6 +8,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.WritableBooleanValue;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -30,6 +32,8 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.Random;
 
+import static javafx.geometry.Pos.*;
+
 class GameScene extends Directions {
 
     void game(Scene gameScene, Group root, Stage primaryStage, Scene endGameScene, Group endGameRoot) {
@@ -41,15 +45,14 @@ class GameScene extends Directions {
             }
 
         }
-
         Text text = new Text();
         root.getChildren().add(text);
         text.setText("SCORE :");
-        text.setFont(Font.font(30));
-        text.relocate(750, 100);
+        text.setFont(Font.font( "verdana",20));
+        text.relocate(700, 80);
         Text scoreText = new Text();
         root.getChildren().add(scoreText);
-        scoreText.relocate(750, 150);
+        scoreText.relocate(800, 85);
         scoreText.setFont(Font.font(20));
         scoreText.setText("0");
 

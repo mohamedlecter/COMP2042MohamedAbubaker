@@ -23,9 +23,25 @@ public class InfoLable extends Label {
         setFont(Font.font( "verdana",20));
         setAlignment(Pos.CENTER);
 
+//
+//        BackgroundImage backgroundImage = new BackgroundImage(new Image(BACKGROUND_IMAGE, 380, 49, false, true), BackgroundRepeat.NO_REPEAT,
+//                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
+//        setBackground(new Background(backgroundImage));
+    }
+
+    public void ScoreInfoLable (String text){
+        prefWidth(130);
+        prefHeight(50);
+        setPadding(new Insets(10, 10, 10, 10));
+        setText(text);
+        setWrapText(true);
+        setFont(Font.font( "verdana",20));
+        setAlignment(Pos.CENTER_LEFT);
+
 
         BackgroundImage backgroundImage = new BackgroundImage(new Image(BACKGROUND_IMAGE, 380, 49, false, true), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
         setBackground(new Background(backgroundImage));
+
     }
 }
