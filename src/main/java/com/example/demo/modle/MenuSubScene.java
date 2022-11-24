@@ -19,7 +19,7 @@ public class MenuSubScene extends SubScene{
 
         isHidden = true ;
 
-        setLayoutX(1024);
+        setLayoutX(1050);
         setLayoutY(200);
 
     }

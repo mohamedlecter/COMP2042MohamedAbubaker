@@ -1,5 +1,9 @@
 package com.example.demo;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,10 +21,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -45,14 +46,17 @@ public class viewManager {
     private final static int MENU_BUTTON_START_Y = 150;
 
     private final String BUTTON_STYLE = "-fx-background-color: black; -fx-text-fill: white";
+    private MenuSubScene createStartGameSubScene;
+    private MenuSubScene createContinueSubScene;
     private MenuSubScene creditsSubScene;
     private MenuSubScene helpSubScene;
     private MenuSubScene scoreSubScene;
-    private MenuSubScene themeChooserSubScene;
-
     private  MenuSubScene sceneToHide;
     List<ThemePicker> themeList;
     private THEME chosenTheme;
+    private String userName;
+
+    File file = new File("D:\\Uni\\Y2\\Software Maintenance\\src\\main\\java\\com\\example\\demo\\data.txt");
 
 
     public viewManager (){
@@ -74,25 +78,21 @@ public class viewManager {
     }
 
     private void createSubScenes(){
-        creditsSubScene = new MenuSubScene();
-        mainPane.getChildren().add(creditsSubScene);
-
-        helpSubScene = new MenuSubScene();
-        mainPane.getChildren().add(helpSubScene);
-
         scoreSubScene = new MenuSubScene();
         mainPane.getChildren().add(scoreSubScene);
 
+        createContinueSubScene = new MenuSubScene();
+        mainPane.getChildren().add(createContinueSubScene);
 //        createAccountSubScene();
-        createThemeSubScene();
+        createStartGameSubScene();
         createHelpSubScene();
         createCreditsSubScene();
 
     }
 
-    private void createThemeSubScene(){
-        themeChooserSubScene = new MenuSubScene();
-        mainPane.getChildren().add(themeChooserSubScene);
+    private void createStartGameSubScene(){
+        createStartGameSubScene = new MenuSubScene();
+        mainPane.getChildren().add(createStartGameSubScene);
 
         InfoLable helpLabel = new InfoLable("LOGIN");
         helpLabel.setLayoutX(120);
@@ -105,22 +105,18 @@ public class viewManager {
         grid.setHgap(5);
         grid.setLayoutX(150);
         grid.setLayoutY(80);
+
         //Defining the Name text field
         final TextField name = new TextField();
-        name.setPromptText("Enter your first name.");
+        name.setPromptText("Enter your user name");
         name.setPrefColumnCount(10);
         name.getText();
         GridPane.setConstraints(name, 0, 0);
         grid.getChildren().add(name);
-        //Defining the Last Name text field
-        final TextField lastName = new TextField();
-        lastName.setPromptText("Enter your last name.");
-        GridPane.setConstraints(lastName, 0, 1);
-        grid.getChildren().add(lastName);
+
         //Defining the Submit button
         Button submit = new Button("Submit");
         GridPane.setConstraints(submit, 1, 0);
-        grid.getChildren().add(submit);
         //Defining the Clear button
         Button clear = new Button("Clear");
         GridPane.setConstraints(clear, 1, 1);
@@ -131,46 +127,41 @@ public class viewManager {
         GridPane.setColumnSpan(label, 2);
         grid.getChildren().add(label);
 
-        //Setting an action for the Submit button
-//        submit.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent e) {
-//
-//            }
-//        });
+//        Setting an action for the Submit button
+            submit.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent e) {
+                    System.out.println("user name: " + name.getText());
+                    try{
+                        if(!file.exists()){
+                            System.out.println("File was not found, a new file file was created");
+                            file.createNewFile();
+                        }
+                        FileWriter fileWriter = new FileWriter(file, true);
+                        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                        bufferedWriter.write( name.getText() + "\n");
+                        bufferedWriter.close();
+                    }
+                    catch (Exception error){
+                        System.out.println(error);
+                    }
+                Account.makeNewAccount(userName);
+
+            }
+        });
+        grid.getChildren().add(submit);
 
         //Setting an action for the Clear button
         clear.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 name.clear();
-                lastName.clear();
                 label.setText(null);
             }
         });
         grid.getChildren().add(clear);
-        themeChooserSubScene.getPane().getChildren().addAll(helpLabel,grid);
-        themeChooserSubScene.getPane().getChildren().add(startBtn());
-
-    }
-
-    private void createAccountSubScene(){
-        helpSubScene = new MenuSubScene();
-        mainPane.getChildren().add(helpSubScene);
-
-        InfoLable helpLabel = new InfoLable("LOGIN");
-        helpLabel.setLayoutX(120);
-        helpLabel.setLayoutY(20);
-
-        Label text = new Label("Name: ");
-        text.setFont(Font.font(20));
-        text.setLayoutX(50);
-        text.setLayoutY(80);
-        text.setWrapText(true);
-
-        TextField textField = new TextField();
-
-        helpSubScene.getPane().getChildren().addAll(helpLabel, text, textField);
+        createStartGameSubScene.getPane().getChildren().addAll(helpLabel,grid);
+        createStartGameSubScene.getPane().getChildren().add(startBtn());
 
     }
 
@@ -250,45 +241,6 @@ public class viewManager {
 
     }
 
-    private HBox createThemes(){
-        HBox box = new HBox();
-        box.setSpacing(20);
-        Button blackBtn = new Button("Black");
-        Button whiteBtn = new Button("White");
-        ThemePicker themeTopick = new ThemePicker(blackBtn);
-        themeList = new ArrayList<>();
-
-        blackBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                for (ThemePicker them : themeList){
-                    // if one of the themes is clicked, it will set to not chosen
-                    them.setIsCircleChoosen(false);
-                }
-                // but theme to pick will be set to true
-                themeTopick.setIsCircleChoosen(true);
-                chosenTheme = themeTopick.getTheme();
-            }
-        });
-
-        whiteBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                for (ThemePicker them : themeList){
-                    // if one of the themes is clicked, it will set to not chosen
-                    them.setIsCircleChoosen(false);
-                }
-                // but theme to pick will be set to true
-                themeTopick.setIsCircleChoosen(true);
-                chosenTheme = themeTopick.getTheme();
-            }
-        });
-        box.getChildren().addAll(blackBtn, whiteBtn);
-
-        box.setLayoutX(300 - (120 *2));
-        box.setLayoutY(100);
-        return box;
-    }
     private Button startBtn(){
         Button button = new Button("START");
         button.setLayoutX(400);
@@ -298,12 +250,13 @@ public class viewManager {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-//                if (chosenTheme != null){
-//                    GameViewManager gameManager = new GameViewManager();
-//                    gameManager.createNewGame(mainStage, chosenTheme);
-//                }
-                GameViewManager gameManager = new GameViewManager();
-                gameManager.createNewGame(mainStage, chosenTheme);
+                if (Account.accounts != null){
+                    // this is not working, change it to check if the user submitted his data correctly if so, let him play the game
+                    GameViewManager gameManager = new GameViewManager();
+                    gameManager.createNewGame(mainStage, chosenTheme);
+                } else {
+                    System.out.println("Enter your user name");
+                }
             }
         });
         return button;
@@ -328,6 +281,7 @@ public class viewManager {
 
     public void createBtns (){
         createStartButton();
+        createContinueButton();
         createScoreButton();
         createHelpButton();
         createCreditsButton();
@@ -336,10 +290,10 @@ public class viewManager {
     }
 
     private void createStartButton(){
-        Button button = new Button("START");
+        Button button = new Button("START NEW GAME");
         button.setLayoutX(MENU_BUTTON_START_X);
         button.setLayoutY(MENU_BUTTON_START_Y);
-        button.setPrefWidth(150);
+        button.setPrefWidth(250);
         button.setPrefHeight(49);
         button.setStyle(BUTTON_STYLE);
         button.setFont(Font.font("verdana", 23));
@@ -364,16 +318,51 @@ public class viewManager {
        button.setOnAction(new EventHandler<ActionEvent>() {
            @Override
            public void handle(ActionEvent actionEvent) {
-              showSubScene(themeChooserSubScene);
+              showSubScene(createStartGameSubScene);
            }
        });
+        mainPane.getChildren().add(button);
+    }
+
+    private void createContinueButton(){
+        Button button = new Button("CONTINUE");
+        button.setLayoutX(MENU_BUTTON_START_X);
+        button.setLayoutY(MENU_BUTTON_START_Y +100) ;
+        button.setPrefWidth(250);
+        button.setPrefHeight(49);
+        button.setStyle(BUTTON_STYLE);
+        button.setFont(Font.font("verdana", 23));
+        button.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(event.getButton().equals(MouseButton.PRIMARY)) {
+                    setButtonPressedStyle(button);
+                }
+            }
+        });
+
+        button.setOnMouseReleased(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(event.getButton().equals(MouseButton.PRIMARY)) {
+                    setButtonReleasedStyle(button);
+                }
+            }
+        });
+
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                showSubScene(createContinueSubScene);
+            }
+        });
         mainPane.getChildren().add(button);
     }
     private void createScoreButton(){
         Button button = new Button("SCORE");
         button.setLayoutX(MENU_BUTTON_START_X);
-        button.setLayoutY(MENU_BUTTON_START_Y + 100);
-        button.setPrefWidth(150);
+        button.setLayoutY(MENU_BUTTON_START_Y + 200);
+        button.setPrefWidth(250);
         button.setPrefHeight(49);
         button.setStyle(BUTTON_STYLE);
         button.setFont(Font.font("verdana", 23));
@@ -405,8 +394,8 @@ public class viewManager {
     private void createHelpButton(){
         Button button = new Button("HELP");
         button.setLayoutX(MENU_BUTTON_START_X);
-        button.setLayoutY(MENU_BUTTON_START_Y + 200);
-        button.setPrefWidth(150);
+        button.setLayoutY(MENU_BUTTON_START_Y + 300);
+        button.setPrefWidth(250);
         button.setPrefHeight(49);
         button.setStyle(BUTTON_STYLE);
         button.setFont(Font.font("verdana", 23));
@@ -439,8 +428,8 @@ public class viewManager {
     private void createCreditsButton(){
         Button button = new Button("CREDITS");
         button.setLayoutX(MENU_BUTTON_START_X);
-        button.setLayoutY(MENU_BUTTON_START_Y + 300);
-        button.setPrefWidth(150);
+        button.setLayoutY(MENU_BUTTON_START_Y + 400);
+        button.setPrefWidth(250);
         button.setPrefHeight(49);
         button.setStyle(BUTTON_STYLE);
         button.setFont(Font.font("verdana", 23));
@@ -474,8 +463,8 @@ public class viewManager {
     private void createExitButton(){
         Button button = new Button("EXIT");
         button.setLayoutX(MENU_BUTTON_START_X);
-        button.setLayoutY(MENU_BUTTON_START_Y + 400);
-        button.setPrefWidth(150);
+        button.setLayoutY(MENU_BUTTON_START_Y + 500);
+        button.setPrefWidth(250);
         button.setPrefHeight(49);
         button.setStyle(BUTTON_STYLE);
         button.setFont(Font.font("verdana", 23));
@@ -511,7 +500,6 @@ public class viewManager {
         logo.setFont(Font.font(35));
         logo.setLayoutX(600);
         logo.setLayoutY(50);
-
         mainPane.getChildren().add(logo);
     }
 
