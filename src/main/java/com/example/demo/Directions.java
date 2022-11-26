@@ -7,18 +7,22 @@ import java.util.Random;
 
 class  Directions {
 
-    public final static int distanceBetweenCells = 10;
+    public final static int distanceBetweenCells = 15;
 
-    public static int HEIGHT = 700;
+//    public static int HEIGHT = 500;
+
+    public static int HEIGHT = 500;
 
     public static int n = 4;
-    public static double LENGTH = (HEIGHT - ((n + 1) * distanceBetweenCells)) / (double) n;
+    public static double LENGTH = 100;
 
     public TextMaker textMaker = TextMaker.getSingleInstance();
 
     public Cell[][] cells = new Cell[n][n];
     public Group root;
     public long score = 0;
+
+    public long count = 0;
 
     static void setN(int number) {
         n = number;

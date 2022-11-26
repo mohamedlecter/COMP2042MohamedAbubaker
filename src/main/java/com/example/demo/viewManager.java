@@ -468,7 +468,6 @@ public class viewManager {
         button.setPrefHeight(49);
         button.setStyle(BUTTON_STYLE);
         button.setFont(Font.font("verdana", 23));
-        button.setFont(Font.font("verdana", 23));
         button.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {

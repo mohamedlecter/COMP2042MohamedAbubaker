@@ -23,7 +23,7 @@ class TextMaker {
         double fontSize = (3 * length) / 7.0;
         Text text = new Text(input);
         text.setFont(Font.font(fontSize));
-        text.relocate((xCell + (1.2)* length / 7.0), (yCell + 2 * length / 7.0));
+        text.relocate((xCell + 270), (yCell + 220));
         text.setFill(Color.WHITE);
 
         return text;

@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 public class GameViewManager {
     private Stage gameStage;
-    private  static final int GAME_WIDTH = 900;
+    private  static final int GAME_WIDTH = 1000;
     private static  final int GAME_HEIGHT = 750;
     private Stage menuStage;
     private ImageView theme;
