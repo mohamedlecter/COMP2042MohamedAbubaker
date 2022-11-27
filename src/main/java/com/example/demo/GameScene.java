@@ -1,9 +1,9 @@
 package com.example.demo;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -155,25 +155,45 @@ class GameScene extends Directions {
         helpScreen.setScene(helpScene);				// Put the scene in the stage.
         helpScreen.show();
     }
-    public void exitScreen(){
+    public void exitScreen() {
         Stage exitScreen = new Stage();
 
-        Label gameOverLabel = new Label("Game Over \nThanks for playing 2048!\n");
+        Label gameOverLabel = new Label("Are you sure you want to exit the game? \n");
         gameOverLabel.setFont(Font.font("Calibri", FontWeight.BOLD, 20));
+        gameOverLabel.setPadding(new Insets(10, 10 ,10 , 10));
+
+        Button closeBtn = new Button("YES");
+        closeBtn.setFont(Font.font("Calibri", 16));
+        closeBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                exitScreen.close();
+                System.exit(0);
+            }
+        });
+
+        Button dontCloseBtn = new Button("NO");
+        dontCloseBtn.setFont(Font.font("Calibri", 16));
+        dontCloseBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                exitScreen.close();
+            }
+        });
+
+        BorderPane exitScreenContainer = new BorderPane();
+        exitScreenContainer.setTop(gameOverLabel);
+        exitScreenContainer.setRight(closeBtn);
+        exitScreenContainer.setLeft(dontCloseBtn);
+        exitScreenContainer.setPadding(new Insets(10, 10, 10, 10));
 
 
-        Scene mssgScene = new Scene(gameOverLabel);
+        Scene mssgScene = new Scene(exitScreenContainer);
         exitScreen.setResizable(false);
-        exitScreen.setTitle("Game Over!");
+        exitScreen.setTitle("Exit game!");
+        exitScreen.setHeight(200);
+        exitScreen.setWidth(400);
         exitScreen.setScene(mssgScene);
         exitScreen.show();
-
-        EventHandler closeGame = e -> {
-            exitScreen.close();
-            System.exit(0);
-        };
-
-        Timeline gameOverTimeline = new Timeline(new KeyFrame(Duration.millis(2000), closeGame)); //The gameOverTimeline is displayed for 2 seconds.
-        gameOverTimeline.play();
     }
 }
