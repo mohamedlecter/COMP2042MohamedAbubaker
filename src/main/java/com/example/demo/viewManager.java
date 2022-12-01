@@ -1,8 +1,5 @@
 package com.example.demo;
 
-import java.io.*;
-import java.util.List;
-
 import com.example.demo.modle.InfoLable;
 import com.example.demo.modle.MenuSubScene;
 import javafx.application.Application;
@@ -15,16 +12,20 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-
-
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 
 public class viewManager {
     private static final int HEIGHT = 784;
     private static final int WIDTH = 1024;
+    public static String themeColor;
     private AnchorPane mainPane;
     private Scene mainScene;
     private Stage mainStage;
@@ -79,13 +80,22 @@ public class viewManager {
         helpLabel.setLayoutX(120);
         helpLabel.setLayoutY(20);
 
+        Label colorLabel = new Label("Pick you're desired theme ");
+        colorLabel.setLayoutX(150);
+        colorLabel.setLayoutY(80);
+        ColorPicker colorPicker = new ColorPicker();
+        colorPicker.setLayoutX(150);
+        colorPicker.setLayoutY(100);
+        colorPicker.setOnAction(e -> {
+            themeColor = String.valueOf(colorPicker.getValue());
+        });
         //Creating a GridPane container
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10, 10, 10, 10));
         grid.setVgap(5);
         grid.setHgap(5);
         grid.setLayoutX(150);
-        grid.setLayoutY(80);
+        grid.setLayoutY(150);
 
         //Defining the Name text field
         final TextField name = new TextField();
@@ -141,8 +151,7 @@ public class viewManager {
             }
         });
         grid.getChildren().add(clear);
-        createStartGameSubScene.getPane().getChildren().addAll(helpLabel,grid);
-        createStartGameSubScene.getPane().getChildren().add(startBtn());
+        createStartGameSubScene.getPane().getChildren().addAll(helpLabel,colorLabel, colorPicker, grid, startBtn());
 
     }
 

@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -14,7 +15,6 @@ public class GameViewManager {
     private  static final int GAME_WIDTH = 1000;
     private static  final int GAME_HEIGHT = 750;
     private Stage menuStage;
-    private ImageView theme;
     Group menuRoot = new Group();
     Scene menuScene = new Scene(menuRoot, GAME_WIDTH,GAME_HEIGHT);
     Group accountRoot = new Group();
@@ -73,7 +73,7 @@ public class GameViewManager {
         gameStage = new Stage();
         Group gameRoot = new Group();
         setGameRoot(gameRoot);
-        Scene gameScene = new Scene(gameRoot, GAME_WIDTH, GAME_HEIGHT, Color.rgb(189, 177, 92));
+        Scene gameScene = new Scene(gameRoot, GAME_WIDTH, GAME_HEIGHT, Paint.valueOf(viewManager.themeColor));
         setGameScene(gameScene);
         gameStage.setScene(gameScene);
         GameScene game = new GameScene();
