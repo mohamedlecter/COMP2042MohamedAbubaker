@@ -15,4 +15,9 @@
       <module name="Software Maintenance" target="18" />
     </bytecodeTargetLevel>
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Software Maintenance" options="--add-exports java.base/jdk.internal.module=com.example.demo" />
+    </option>
+  </component>
 </project>

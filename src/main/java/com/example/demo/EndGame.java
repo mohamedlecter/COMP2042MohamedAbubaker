@@ -32,8 +32,7 @@ public class EndGame {
         text.setFont(Font.font(80));
         root.getChildren().add(text);
 
-
-        Text scoreText = new Text(score+"");
+        Text scoreText = new Text("Score: "+score+"");
         scoreText.setFill(Color.BLACK);
         scoreText.relocate(250,600);
         scoreText.setFont(Font.font(80));
@@ -58,8 +57,6 @@ public class EndGame {
                 }
             }
         });
-
-
-
+        root.getChildren().add(quitButton);
     }
 }

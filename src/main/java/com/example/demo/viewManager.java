@@ -1,36 +1,23 @@
 package com.example.demo;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import com.example.demo.modle.InfoLable;
 import com.example.demo.modle.MenuSubScene;
-import com.example.demo.modle.THEME;
-import com.example.demo.modle.ThemePicker;
 import javafx.application.Application;
 import javafx.application.HostServices;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -47,13 +34,10 @@ public class viewManager {
 
     private final String BUTTON_STYLE = "-fx-background-color: black; -fx-text-fill: white";
     private MenuSubScene createStartGameSubScene;
-    private MenuSubScene createContinueSubScene;
     private MenuSubScene creditsSubScene;
     private MenuSubScene helpSubScene;
     private MenuSubScene scoreSubScene;
     private  MenuSubScene sceneToHide;
-    List<ThemePicker> themeList;
-    private THEME chosenTheme;
     private String userName;
 
     File file = new File("D:\\Uni\\Y2\\Software Maintenance\\src\\main\\java\\com\\example\\demo\\data.txt");
@@ -81,9 +65,6 @@ public class viewManager {
         scoreSubScene = new MenuSubScene();
         mainPane.getChildren().add(scoreSubScene);
 
-        createContinueSubScene = new MenuSubScene();
-        mainPane.getChildren().add(createContinueSubScene);
-//        createAccountSubScene();
         createStartGameSubScene();
         createHelpSubScene();
         createCreditsSubScene();
@@ -253,7 +234,7 @@ public class viewManager {
                 if (Account.accounts != null){
                     // this is not working, change it to check if the user submitted his data correctly if so, let him play the game
                     GameViewManager gameManager = new GameViewManager();
-                    gameManager.createNewGame(mainStage, chosenTheme);
+                    gameManager.createNewGame(mainStage);
                 } else {
                     System.out.println("Enter your user name");
                 }
@@ -270,18 +251,15 @@ public class viewManager {
         String BUTTON_PRESSED_STYLE = "-fx-background-color: green;";
         button.setStyle(BUTTON_PRESSED_STYLE);
         button.setPrefHeight(45);
-//        button.setLayoutY(button.getLayoutY() + 4);
     }
 
     private void setButtonReleasedStyle(Button button) {
         button.setStyle(BUTTON_STYLE);
         button.setPrefHeight(45);
-//        button.setLayoutY(button.getLayoutY() + 4);
     }
 
     public void createBtns (){
         createStartButton();
-        createContinueButton();
         createScoreButton();
         createHelpButton();
         createCreditsButton();
@@ -324,44 +302,11 @@ public class viewManager {
         mainPane.getChildren().add(button);
     }
 
-    private void createContinueButton(){
-        Button button = new Button("CONTINUE");
-        button.setLayoutX(MENU_BUTTON_START_X);
-        button.setLayoutY(MENU_BUTTON_START_Y +100) ;
-        button.setPrefWidth(250);
-        button.setPrefHeight(49);
-        button.setStyle(BUTTON_STYLE);
-        button.setFont(Font.font("verdana", 23));
-        button.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if(event.getButton().equals(MouseButton.PRIMARY)) {
-                    setButtonPressedStyle(button);
-                }
-            }
-        });
-
-        button.setOnMouseReleased(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if(event.getButton().equals(MouseButton.PRIMARY)) {
-                    setButtonReleasedStyle(button);
-                }
-            }
-        });
-
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                showSubScene(createContinueSubScene);
-            }
-        });
-        mainPane.getChildren().add(button);
-    }
+   
     private void createScoreButton(){
         Button button = new Button("SCORE");
         button.setLayoutX(MENU_BUTTON_START_X);
-        button.setLayoutY(MENU_BUTTON_START_Y + 200);
+        button.setLayoutY(MENU_BUTTON_START_Y + 100);
         button.setPrefWidth(250);
         button.setPrefHeight(49);
         button.setStyle(BUTTON_STYLE);
@@ -394,7 +339,7 @@ public class viewManager {
     private void createHelpButton(){
         Button button = new Button("HELP");
         button.setLayoutX(MENU_BUTTON_START_X);
-        button.setLayoutY(MENU_BUTTON_START_Y + 300);
+        button.setLayoutY(MENU_BUTTON_START_Y + 200);
         button.setPrefWidth(250);
         button.setPrefHeight(49);
         button.setStyle(BUTTON_STYLE);
@@ -428,7 +373,7 @@ public class viewManager {
     private void createCreditsButton(){
         Button button = new Button("CREDITS");
         button.setLayoutX(MENU_BUTTON_START_X);
-        button.setLayoutY(MENU_BUTTON_START_Y + 400);
+        button.setLayoutY(MENU_BUTTON_START_Y + 300);
         button.setPrefWidth(250);
         button.setPrefHeight(49);
         button.setStyle(BUTTON_STYLE);
@@ -463,7 +408,7 @@ public class viewManager {
     private void createExitButton(){
         Button button = new Button("EXIT");
         button.setLayoutX(MENU_BUTTON_START_X);
-        button.setLayoutY(MENU_BUTTON_START_Y + 500);
+        button.setLayoutY(MENU_BUTTON_START_Y + 400);
         button.setPrefWidth(250);
         button.setPrefHeight(49);
         button.setStyle(BUTTON_STYLE);

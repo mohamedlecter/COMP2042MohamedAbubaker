@@ -92,10 +92,15 @@ class GameScene extends Directions {
         saveButton.setOnAction(e ->{
 
         });
+        Button screenShootButton = new Button("Screenshoot");
+        screenShootButton.setFocusTraversable(false);
+        screenShootButton.setOnAction(e ->{
 
-        //Puts all of the ALT buttons in an HBox on the bottom of the stage.
+        });
+
+        //Puts all the ALT buttons in an HBox on the bottom of the stage.
         HBox buttons = new HBox(115);
-        buttons.getChildren().addAll( helpButton, loadButton, saveButton, exitButton);
+        buttons.getChildren().addAll( helpButton, loadButton, saveButton, screenShootButton, exitButton);
         buttons.setLayoutX(230);
         buttons.setLayoutY(690);
         root.getChildren().add(buttons);
@@ -196,4 +201,18 @@ class GameScene extends Directions {
         exitScreen.setScene(mssgScene);
         exitScreen.show();
     }
+//    public void screenShot(){
+//        WritableImage writableImage = root.snapshot(new SnapshotParameters(), null);
+//
+//        File file = new File("capturedRoot.png");
+//        try {
+//            ModuleInfoExtender ImageIO = null;
+//            Object SwingFXUtils = null;
+//            ImageIO.write(SwingFXUtils.fromFXImage(writableImage, null), "png", file);
+//            System.out.println("Captured: " + file.getAbsolutePath());
+//        } catch (IOException ex) {
+//            Logger.getLogger(JavaFXCaptureScreen.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+
 }

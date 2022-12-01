@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import com.example.demo.modle.THEME;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -52,7 +51,7 @@ public class GameViewManager {
 
     }
 
-    public void createNewGame(Stage menuStage, THEME chosenTheme){
+    public void createNewGame(Stage menuStage){
         this.menuStage = menuStage;
         this.menuStage.hide();
         game();
