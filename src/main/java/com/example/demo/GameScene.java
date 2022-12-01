@@ -9,6 +9,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -18,7 +19,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 
 class GameScene extends Directions {
@@ -66,9 +66,15 @@ class GameScene extends Directions {
         scoreCounterText.setTextAlignment(TextAlignment.CENTER);
         root.getChildren().add(scoreCounterText);
 
+        Button settingsButton = new Button("Settings");
+        settingsButton.setFocusTraversable(false);
+        settingsButton.setLayoutX(300);
+        settingsButton.setLayoutY(50);
+        settingsButton.setOnAction(e ->{
+            settingsScreen();
+        });
+        root.getChildren().add(settingsButton);
 
-        // Creates 4 buttons that displays how the game works, exits the game, saves the game or loads the game.  setFocusTraversable to false prevents the
-        // focus from highlighing the buttons.  This, in turn, keeps the focus just on the game board.
         Button helpButton = new Button("Help");
         helpButton.setFocusTraversable(false);
         helpButton.setOnAction(e ->{
@@ -201,18 +207,38 @@ class GameScene extends Directions {
         exitScreen.setScene(mssgScene);
         exitScreen.show();
     }
-//    public void screenShot(){
-//        WritableImage writableImage = root.snapshot(new SnapshotParameters(), null);
-//
-//        File file = new File("capturedRoot.png");
-//        try {
-//            ModuleInfoExtender ImageIO = null;
-//            Object SwingFXUtils = null;
-//            ImageIO.write(SwingFXUtils.fromFXImage(writableImage, null), "png", file);
-//            System.out.println("Captured: " + file.getAbsolutePath());
-//        } catch (IOException ex) {
-//            Logger.getLogger(JavaFXCaptureScreen.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
+
+    public void settingsScreen() {
+        Stage settingsScreen = new Stage();
+
+        Label settings = new Label("Settings");
+        settings.setFont(Font.font("Calibri", FontWeight.BOLD, FontPosture.ITALIC, 20));
+
+        Button playBtn = new Button("PLAY");
+
+        Slider volumeSlider = new Slider();
+        playBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                String fileName = "";
+                playSound(fileName);
+            }
+        });
+        BorderPane settingsSizing = new BorderPane();
+        settingsSizing.setCenter(settings);
+        settingsSizing.setLeft(playBtn);
+        settingsSizing.setRight(volumeSlider);
+
+        Scene settingsScene = new Scene(settingsSizing);				// Create a scene.
+        settingsScreen.setResizable(false);				// Sets the output to not resizeable.
+        settingsScreen.setTitle("Settings");	// Set the stage title.
+        settingsScreen.setHeight(300);
+        settingsScreen.setWidth(800);
+        settingsScreen.setScene(settingsScene);				// Put the scene in the stage.
+        settingsScreen.show();
+    }
+    private void playSound(String fileName){
+
+    }
 
 }

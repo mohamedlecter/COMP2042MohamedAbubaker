@@ -29,7 +29,7 @@ public class Main extends Application {
 
     public void start(Stage primaryStage) throws Exception {
         try {
-            viewManager manager = new viewManager();
+            MainMenu manager = new MainMenu();
             primaryStage = manager.getMainStage();
             primaryStage.show();
         } catch(Exception e) {
