@@ -85,7 +85,7 @@ public class MainMenu {
 
    
     private void createScoreButton(){
-        Button button = new Button("SCORE");
+        Button button = new Button("HIGH SCORE LIST");
         button.setLayoutX(MENU_BUTTON_START_X);
         button.setLayoutY(MENU_BUTTON_START_Y + 100);
         button.setPrefWidth(250);

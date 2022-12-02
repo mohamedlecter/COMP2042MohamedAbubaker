@@ -132,7 +132,6 @@ class GameScene extends Directions {
                     if (haveEmptyCell == -1) {
                         if (GameScene.this.canNotMove()) {
                             primaryStage.setScene(endGameScene);
-
                             EndGame.getInstance().endGameShow(endGameScene, endGameRoot, primaryStage, score);
                             root.getChildren().clear();
                             score = 0;

@@ -12,11 +12,16 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.Optional;
 
 
 public class EndGame {
     private static EndGame singleInstance = null;
+    static File file = new File("D:\\Uni\\Y2\\Software Maintenance\\src\\main\\java\\com\\example\\demo\\data.txt");
+
     private EndGame(){
 
     }
@@ -57,6 +62,20 @@ public class EndGame {
                 }
             }
         });
+            try{
+                if(!file.exists()){
+                    System.out.println("File was not found, a new file file was created");
+                    file.createNewFile();
+                }
+                FileWriter fileWriter = new FileWriter(file, true);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                bufferedWriter.write(String.valueOf(score) + "\n");
+                bufferedWriter.close();
+            }
+            catch (Exception error){
+                System.out.println(error);
+            }
+
         root.getChildren().add(quitButton);
     }
 }

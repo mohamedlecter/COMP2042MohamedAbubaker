@@ -14,11 +14,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class MainMenuSubScence{
     public static String themeColor;
@@ -35,9 +37,8 @@ public class MainMenuSubScence{
 
     }
     public static void createSubScenes(AnchorPane mainPane, Stage mainStage){
-        scoreSubScene = new MenuSubScene();
-        mainPane.getChildren().add(scoreSubScene);
         createStartGameSubScene(mainPane, mainStage);
+        createscoreSubScene(mainPane);
         createHelpSubScene(mainPane);
         createCreditsSubScene(mainPane);
 
@@ -93,7 +94,6 @@ public class MainMenuSubScence{
         submit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                System.out.println("user name: " + name.getText());
                 try{
                     if(!file.exists()){
                         System.out.println("File was not found, a new file file was created");
@@ -101,7 +101,7 @@ public class MainMenuSubScence{
                     }
                     FileWriter fileWriter = new FileWriter(file, true);
                     BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                    bufferedWriter.write( name.getText() + "\n");
+                    bufferedWriter.write( name.getText() + " - ");
                     bufferedWriter.close();
                 }
                 catch (Exception error){
@@ -144,6 +144,48 @@ public class MainMenuSubScence{
             }
         });
         return button;
+    }
+
+    private static void createscoreSubScene(AnchorPane mainPane){
+        scoreSubScene = new MenuSubScene();
+        mainPane.getChildren().add(scoreSubScene);
+
+        InfoLable scoreLabel = new InfoLable("Score list ");
+        scoreLabel.setLayoutX(120);
+        scoreLabel.setLayoutY(20);
+
+        Text scoreText = new Text();
+        scoreText.setLayoutX(120);
+        scoreText.setLayoutY(80);
+        scoreText.setFont(Font.font("verdana", 14));
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            List<ScoreLeaderBoard> leaders = new ArrayList<>();
+            String x;
+            while ((x = br.readLine()) != null) {
+                ScoreLeaderBoard scoreLeaderBoard = new ScoreLeaderBoard();
+                String[] splits = x.split(" - ");
+                scoreLeaderBoard.setName(splits[0]);
+                scoreLeaderBoard.setScore(Integer.parseInt(splits[1]));
+                leaders.add(scoreLeaderBoard);
+            }
+            Collections.sort(leaders);
+            StringBuilder leaderBoardStr = new StringBuilder();
+
+            for (ScoreLeaderBoard leaderBoardEntry : leaders) {
+                leaderBoardStr.append(leaderBoardEntry.getName())
+                        .append(" - ")
+                        .append(leaderBoardEntry.getScore())
+                        .append("\n");
+            }
+            String s = scoreText.getText();
+            scoreText.setText( s + "\n" + leaderBoardStr.toString());
+
+        } catch (Exception E) {
+            System.out.println("cant read score leaderboard");
+        }
+        scoreSubScene.getPane().getChildren().addAll(scoreLabel, scoreText );
     }
 
     private static void createHelpSubScene(AnchorPane mainPane){
@@ -190,7 +232,7 @@ public class MainMenuSubScence{
         credit1.setWrapText(true);
         credit1.setAlignment(Pos.CENTER);
 
-        String[]link    = new String[6];
+        String[]link = new String[6];
         link[0] = "https://github.com/mohamedlecter/COMP2042MohamedAbubaker";
         link[1] = "https://freesound.org/";
 
@@ -221,5 +263,6 @@ public class MainMenuSubScence{
         });
 
     }
+
 
 }
