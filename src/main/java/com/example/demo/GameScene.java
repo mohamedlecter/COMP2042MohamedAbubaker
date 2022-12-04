@@ -100,8 +100,28 @@ class GameScene extends Directions {
         });
         Button screenShootButton = new Button("Screenshoot");
         screenShootButton.setFocusTraversable(false);
-        screenShootButton.setOnAction(e ->{
-
+        screenShootButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+//                WritableImage snapshot = gameScene.snapshot(null);
+//                BufferedImage fromFXImage = SwingFXUtils.fromFXImage(snapshot, null);
+//                BufferedImage pngImage = null;
+//                byte[] imageInByte;
+//                try
+//                {
+//                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//                    ImageIO.write(fromFXImage, "png", byteArrayOutputStream);
+//                    byteArrayOutputStream.flush();
+//                    imageInByte = byteArrayOutputStream.toByteArray();
+//                    byteArrayOutputStream.close();
+//                    InputStream in = new ByteArrayInputStream(imageInByte);
+//                    pngImage = ImageIO.read(in);
+//                }
+//                catch (IOException e)
+//                {
+//                    e.printStackTrace();
+//                }
+            }
         });
 
         //Puts all the ALT buttons in an HBox on the bottom of the stage.

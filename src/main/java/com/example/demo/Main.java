@@ -1,29 +1,13 @@
 package com.example.demo;
 import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    static final int WIDTH = 900;
-    static final int HEIGHT = 900;
-    private Group gameRoot = new Group();
-    private Scene gameScene = new Scene(gameRoot, WIDTH, HEIGHT, Color.rgb(189, 177, 92));
-
     /**
-     * @param gameScene setting the game scene
-     */
-    public void setGameScene(Scene gameScene) {
-        this.gameScene = gameScene;
-    }
-    public void setGameRoot(Group gameRoot) {
-        this.gameRoot = gameRoot;
-    }
-
-    /**
-     * @param primaryStage h
-     * @throws Exception j
+     * this is the main class that:
+     * @param primaryStage
+     * @throws Exception, in case there is any error, this argument throws an error
+     * as arguments which are needed to start the JavaFx program
      */
     @Override
 
