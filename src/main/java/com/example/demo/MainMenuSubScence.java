@@ -16,7 +16,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,8 +33,12 @@ public class MainMenuSubScence{
 
     public MainMenuSubScence(AnchorPane mainPane, Stage mainStage){
         createSubScenes(mainPane, mainStage);
-
     }
+    /**
+     * this function works as a container for all the sub scenes where it takes these param:
+     * @param mainPane
+     * @param mainStage
+     */
     public static void createSubScenes(AnchorPane mainPane, Stage mainStage){
         createStartGameSubScene(mainPane, mainStage);
         createscoreSubScene(mainPane);
@@ -44,6 +47,11 @@ public class MainMenuSubScence{
 
     }
 
+    /**
+     * this function creates the game sub scene by taking:
+     * @param mainPane -> when creating the game sub scene, it'll be added to the main pane param
+     * @param mainSatge -> when pressing on the start button, it passes the mainStage param so that the new game gets created
+     */
     private static void createStartGameSubScene(AnchorPane mainPane, Stage mainSatge){
         createStartGameSubScene = new MenuSubScene();
         mainPane.getChildren().add(createStartGameSubScene);
@@ -55,6 +63,8 @@ public class MainMenuSubScence{
         Label colorLabel = new Label("Pick you're desired theme ");
         colorLabel.setLayoutX(150);
         colorLabel.setLayoutY(80);
+        // creating the color picker, on pressing the desired color, it's value gets stored in themeColor variable
+        // that will be used when calling gameScene and pass the themeColor as the background color
         ColorPicker colorPicker = new ColorPicker();
         colorPicker.setLayoutX(150);
         colorPicker.setLayoutY(100);
@@ -90,7 +100,8 @@ public class MainMenuSubScence{
         GridPane.setColumnSpan(label, 2);
         grid.getChildren().add(label);
 
-//        Setting an action for the Submit button
+        // Setting an action for the Submit button, where the username gets stored in a file that will be called
+        // again when creating the high score list
         submit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -103,12 +114,11 @@ public class MainMenuSubScence{
                     BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
                     bufferedWriter.write( name.getText() + " - ");
                     bufferedWriter.close();
+                    userName = name.getText();
                 }
                 catch (Exception error){
                     System.out.println(error);
                 }
-                Account.makeNewAccount(userName);
-
             }
         });
         grid.getChildren().add(submit);
@@ -125,6 +135,12 @@ public class MainMenuSubScence{
         createStartGameSubScene.getPane().getChildren().addAll(helpLabel,colorLabel, colorPicker, grid, startBtn(mainSatge));
 
     }
+
+    /**
+     * this button is responsible for creating a new game on pressing it, where it will call gameManager.createNewGame and passes :
+     * @param mainStage
+     * @return
+     */
     private static Button startBtn(Stage mainStage){
         Button button = new Button("START");
         button.setLayoutX(400);
@@ -134,8 +150,7 @@ public class MainMenuSubScence{
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                if (Account.accounts != null){
-                    // this is not working, change it to check if the user submitted his data correctly if so, let him play the game
+                if (userName!= null){
                     GameViewManager gameManager = new GameViewManager();
                     gameManager.createNewGame(mainStage);
                 } else {
@@ -146,6 +161,10 @@ public class MainMenuSubScence{
         return button;
     }
 
+    /**
+     * this function creates a score list sub scene where it takes:
+     * @param mainPane -> as params, when creating the score sub scene, it'll be added to the main pane
+     */
     private static void createscoreSubScene(AnchorPane mainPane){
         scoreSubScene = new MenuSubScene();
         mainPane.getChildren().add(scoreSubScene);
@@ -178,6 +197,9 @@ public class MainMenuSubScence{
                         .append(" - ")
                         .append(leaderBoardEntry.getScore())
                         .append("\n");
+                System.out.println(leaderBoardEntry.getScore());
+//                toDo ->  check if leaderBoardEntry.getScore() is empty i.e,
+//                 user exits the in the middle of the game and the score is not saved, then display the score as not saved
             }
             String s = scoreText.getText();
             scoreText.setText( s + "\n" + leaderBoardStr.toString());
@@ -188,6 +210,10 @@ public class MainMenuSubScence{
         scoreSubScene.getPane().getChildren().addAll(scoreLabel, scoreText );
     }
 
+    /**
+     * this function creates a help sub scene that takes:
+     * @param mainPane -> as params, when creating the help sub scene, it'll be added to the main pane
+     */
     private static void createHelpSubScene(AnchorPane mainPane){
         helpSubScene = new MenuSubScene();
         mainPane.getChildren().add(helpSubScene);
@@ -208,6 +234,11 @@ public class MainMenuSubScence{
         helpSubScene.getPane().getChildren().addAll(helpLabel, text);
 
     }
+
+    /**
+     * this function creates the credis sub scene where it takes
+     * @param mainPane -> as params, when creating the credits sub scene, it'll be added to the main pane
+     */
 
     private static void createCreditsSubScene(AnchorPane mainPane){
         creditsSubScene = new MenuSubScene();
