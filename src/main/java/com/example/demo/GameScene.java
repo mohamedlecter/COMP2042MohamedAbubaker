@@ -89,6 +89,13 @@ class GameScene extends Directions {
                 exitScreen();
         });
 
+        Button resetGameButton = new Button("Reset Game");
+        resetGameButton.setFocusTraversable(false);
+        resetGameButton.setOnAction(e ->{
+            GameViewManager gameManager = new GameViewManager();
+            gameManager.createNewGame(primaryStage);
+        });
+
         Button loadButton = new Button("Load");
         loadButton.setFocusTraversable(false);
         loadButton.setOnAction(e ->{
@@ -100,35 +107,10 @@ class GameScene extends Directions {
         saveButton.setOnAction(e ->{
 
         });
-        Button screenShootButton = new Button("Screenshot");
-        screenShootButton.setFocusTraversable(false);
-        screenShootButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-//                WritableImage snapshot = gameScene.snapshot(null);
-//                BufferedImage fromFXImage = SwingFXUtils.fromFXImage(snapshot, null);
-//                BufferedImage pngImage = null;
-//                byte[] imageInByte;
-//                try
-//                {
-//                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//                    ImageIO.write(fromFXImage, "png", byteArrayOutputStream);
-//                    byteArrayOutputStream.flush();
-//                    imageInByte = byteArrayOutputStream.toByteArray();
-//                    byteArrayOutputStream.close();
-//                    InputStream in = new ByteArrayInputStream(imageInByte);
-//                    pngImage = ImageIO.read(in);
-//                }
-//                catch (IOException e)
-//                {
-//                    e.printStackTrace();
-//                }
-            }
-        });
 
         //Puts all the ALT buttons in an HBox on the bottom of the stage.
         HBox buttons = new HBox(115);
-        buttons.getChildren().addAll( helpButton, loadButton, saveButton, screenShootButton, exitButton);
+        buttons.getChildren().addAll( helpButton, loadButton, saveButton, resetGameButton, exitButton);
         buttons.setLayoutX(230);
         buttons.setLayoutY(690);
         root.getChildren().add(buttons);

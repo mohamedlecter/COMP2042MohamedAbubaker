@@ -33,11 +33,11 @@ public class EndGame {
         return singleInstance;
     }
 
-    public void endGameShow(Scene endGameScene, Group root, Stage primaryStage,long score){
+    public void endGameShow(Scene endGameScene, Group root, Stage primaryStage, long score){
         /**
          * this sets the background color to be the same user's choice
          */
-        endGameScene.setFill(Paint.valueOf(MainMenuSubScence.themeColor) );
+        endGameScene.setFill(Paint.valueOf(MainMenuSubScence.themeColor));
 
         Text text = new Text("GAME OVER");
         text.relocate(250,250);
@@ -50,21 +50,30 @@ public class EndGame {
         scoreText.setFont(Font.font(80));
         root.getChildren().add(scoreText);
 
+        Button resetGameButton = new Button("TRY AGAIN");
+        resetGameButton.setPrefSize(100,30);
+        resetGameButton.setTextFill(Color.BLACK);
+        resetGameButton.relocate(250,600);
+        resetGameButton.setFocusTraversable(false);
+        root.getChildren().add(resetGameButton);
+        resetGameButton.setOnAction(e ->{
+            Main newGame = new Main();
+            try {
+                newGame.start(primaryStage);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         Button quitButton = new Button("QUIT");
         quitButton.setPrefSize(100,30);
         quitButton.setTextFill(Color.BLACK);
-        quitButton.relocate(250,600);
+        quitButton.relocate(500,600);
         root.getChildren().add(quitButton);
-        /*
-         * on press, it calls the exit screen function
-         */
         quitButton.setOnAction(e ->{
             GameScene scene = new GameScene();
             scene.exitScreen();
         });
-        /*
-         * the score gets stored in the data file
-         */
+        //the score gets stored in the data file
             try{
                 if(!file.exists()){
                     System.out.println("File was not found, a new file file was created");
@@ -72,7 +81,7 @@ public class EndGame {
                 }
                 FileWriter fileWriter = new FileWriter(file, true);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                bufferedWriter.write(String.valueOf(score) + "\n");
+                bufferedWriter.write(String.valueOf(score));
                 bufferedWriter.close();
             }
             catch (Exception error){

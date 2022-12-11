@@ -31,15 +31,14 @@ public class MainMenu {
     private  MenuSubScene sceneToHide;
 
     /**
-     * this function is called in the Main file and it works as a container scene for all the subScene that will be called later
+     * this function is called in the Main file, and it works as a container scene for all the subScene that will be called later
      */
     public MainMenu (){
         mainPane = new AnchorPane();
-        mainPane.setStyle("-fx-background-color: white;");
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);
         mainStage = new Stage();
         mainStage.setScene(mainScene);
-        MainMenuSubScence.createSubScenes(mainPane, mainStage);
+        createSubScenes(mainPane, mainStage);
         createBtns();
     }
     public Stage getMainStage(){

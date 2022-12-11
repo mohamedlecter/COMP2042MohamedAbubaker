@@ -114,7 +114,7 @@ public class MainMenuSubScence{
                     }
                     FileWriter fileWriter = new FileWriter(file, true);
                     BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                    bufferedWriter.write( name.getText() + " - ");
+                    bufferedWriter.write( "\n" +name.getText() + " - ");
                     bufferedWriter.close();
                     userName = name.getText();
                 }
@@ -238,7 +238,7 @@ public class MainMenuSubScence{
     }
 
     /**
-     * this function creates the credis sub scene where it takes
+     * this function creates the credits sub scene where it takes
      * @param mainPane -> as params, when creating the credits sub scene, it'll be added to the main pane
      */
 
@@ -251,7 +251,6 @@ public class MainMenuSubScence{
         creditsLabel.setLayoutY(20);
 
         Label credit0 = new Label("Programmed by Mohamed Abubaker Mohamed Ahmed - 20302059.");
-        Label credit1 = new Label("Sounds and images from ");
 
         credit0.setFont(Font.font(20));
         credit0.setMaxWidth(500);
@@ -259,21 +258,13 @@ public class MainMenuSubScence{
         credit0.setWrapText(true);
         credit0.setAlignment(Pos.CENTER);
 
-        credit1.setFont(Font.font(20));
-        credit1.setMaxWidth(500);
-        credit1.setMaxHeight(450);
-        credit1.setWrapText(true);
-        credit1.setAlignment(Pos.CENTER);
-
         String[]link = new String[6];
         link[0] = "https://github.com/mohamedlecter/COMP2042MohamedAbubaker";
-        link[1] = "https://freesound.org/";
 
-        Hyperlink link0, link1;
+        Hyperlink link0;
         link0 = new Hyperlink(link[0]);
-        link1 = new Hyperlink(link[1]);
 
-        VBox creditsBox = new VBox(10, credit0,link0, credit1, link1);
+        VBox creditsBox = new VBox(10, credit0, link0);
 
         creditsBox.setLayoutX(50);
         creditsBox.setLayoutY(80);
@@ -288,14 +279,5 @@ public class MainMenuSubScence{
                 services.showDocument(link[0]);
             }
         });
-        link1.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent arg0) {
-                services.showDocument(link[1]);
-            }
-        });
-
     }
-
-
 }
