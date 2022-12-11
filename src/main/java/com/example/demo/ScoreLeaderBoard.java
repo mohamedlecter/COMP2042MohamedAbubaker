@@ -1,5 +1,9 @@
 package com.example.demo;
 
+/**
+ * this class is used to set and get the score and name of the user in a text file
+ */
+
 public class ScoreLeaderBoard implements Comparable {
     String name;
     int score;

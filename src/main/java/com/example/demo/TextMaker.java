@@ -9,7 +9,6 @@ class TextMaker {
     private static TextMaker singleInstance = null;
 
     private TextMaker() {
-
     }
 
     static TextMaker getSingleInstance() {

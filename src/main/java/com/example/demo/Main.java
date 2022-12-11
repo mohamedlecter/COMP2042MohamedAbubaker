@@ -4,7 +4,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     /**
-     * this is the main class that:
+     * this is the main class that takes:
      * @param primaryStage
      * @throws Exception, in case there is any error, this argument throws an error
      * as arguments which are needed to start the JavaFx program

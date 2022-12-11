@@ -98,8 +98,6 @@ public class Cell {
                 break;
             case 2048:
                 rectangle.setFill(Color.rgb(250,0,0,1));
-
-
         }
 
     }
@@ -115,7 +113,6 @@ public class Cell {
     int getNumber() {
         return Integer.parseInt(textClass.getText());
     }
-
     private Text getTextClass() {
         return textClass;
     }

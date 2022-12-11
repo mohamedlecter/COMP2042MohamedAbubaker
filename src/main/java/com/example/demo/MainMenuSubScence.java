@@ -44,7 +44,6 @@ public class MainMenuSubScence{
         createscoreSubScene(mainPane);
         createHelpSubScene(mainPane);
         createCreditsSubScene(mainPane);
-
     }
 
     /**

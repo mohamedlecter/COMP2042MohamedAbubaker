@@ -98,7 +98,7 @@ class GameScene extends Directions {
         saveButton.setOnAction(e ->{
 
         });
-        Button screenShootButton = new Button("Screenshoot");
+        Button screenShootButton = new Button("Screenshot");
         screenShootButton.setFocusTraversable(false);
         screenShootButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -134,20 +134,29 @@ class GameScene extends Directions {
 
         randomFillNumber(1);
         randomFillNumber(1);
-        gameScene.addEventHandler(KeyEvent.KEY_PRESSED, key ->{
+        gameScene.addEventHandler(KeyEvent.KEY_RELEASED, key ->{
                 Platform.runLater(() -> {
                     int haveEmptyCell;
                     if (key.getCode() == KeyCode.DOWN) {
                         GameScene.this.moveDown();
+                        GameScene.this.sumCellNumbersToScore();
+                        scoreCounterText.setText(String.valueOf(score));
                     } else if (key.getCode() == KeyCode.UP) {
                         GameScene.this.moveUp();
+                        GameScene.this.sumCellNumbersToScore();
+                        scoreCounterText.setText(String.valueOf(score));
                     } else if (key.getCode() == KeyCode.LEFT) {
                         GameScene.this.moveLeft();
+                        GameScene.this.sumCellNumbersToScore();
+                        scoreCounterText.setText(String.valueOf(score));
                     } else if (key.getCode() == KeyCode.RIGHT) {
                         GameScene.this.moveRight();
+                        GameScene.this.sumCellNumbersToScore();
+                        scoreCounterText.setText(String.valueOf(score));
                     }
-                    GameScene.this.sumCellNumbersToScore();
-                    scoreCounterText.setText(String.valueOf(score));
+                    else {
+                        return;
+                    }
                     haveEmptyCell = GameScene.this.haveEmptyCell();
                     if (haveEmptyCell == -1) {
                         if (GameScene.this.canNotMove()) {
