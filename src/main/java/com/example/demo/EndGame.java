@@ -13,7 +13,8 @@ import java.io.File;
 import java.io.FileWriter;
 
 /**
- * this class is responsible for creating the end game scene
+ *  this class is responsible for creating the end game scene
+ * @author mohamed abubaker-modified
  */
 public class EndGame {
     private static EndGame singleInstance = null;
@@ -77,6 +78,7 @@ public class EndGame {
             catch (Exception error){
                 System.out.println(error);
             }
+
 
         root.getChildren().add(quitButton);
     }

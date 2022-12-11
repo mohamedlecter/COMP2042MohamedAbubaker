@@ -6,6 +6,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+/**
+ * @author mohamed abubaker-modified
+ */
 public class Cell {
     private Rectangle rectangle;
     private Group root;

@@ -20,7 +20,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
-
+/**
+ * @author mohamed abubaker-modified
+ */
 class GameScene extends Directions {
     static Label scoreLabel = new Label();
 

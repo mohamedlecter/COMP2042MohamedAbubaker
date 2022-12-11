@@ -2,7 +2,11 @@ package com.example.demo;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+/**
+ * @author mohamed abubaker-modified
+ */
 public class Main extends Application {
+
     /**
      * this is the main class that takes:
      * @param primaryStage
@@ -10,7 +14,6 @@ public class Main extends Application {
      * as arguments which are needed to start the JavaFx program
      */
     @Override
-
     public void start(Stage primaryStage) throws Exception {
         try {
             MainMenu manager = new MainMenu();

@@ -14,11 +14,12 @@ import javafx.stage.Stage;
 
 import static com.example.demo.MainMenuSubScence.*;
 
+/**
+ * this class is for the main menu before the game starts, it has buttons such as:
+ * Start, High score list, Help, Credits, Exit buttons, each button has its own functionality
+ * @author mohamed abubaker
+ */
 public class MainMenu {
-    /**
-     * this class is for the main menu before the game starts, it has buttons such as:
-     * Start, High score list, Help, Credits, Exit buttons, each button has its own functionality
-     */
     private static final int HEIGHT = 784;
     private static final int WIDTH = 1024;
     private AnchorPane mainPane;

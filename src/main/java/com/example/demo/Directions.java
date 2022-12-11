@@ -5,7 +5,12 @@ import javafx.scene.text.Text;
 import java.util.Random;
 
 
-class  Directions {
+/**
+ * @author mohamed abubaker
+ * this was originally a bunch of functions in game scene that are needed for handling the movement of the cells,
+ * so I have created a class for that and then made the game scene inherits it
+ */
+class Directions {
     public final static int distanceBetweenCells = 15;
     public static int HEIGHT = 500;
     public static int n = 4;

@@ -8,7 +8,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 /**
- * this class is responsible for creating a new game scene, it's called after pressing the start button in the game menu
+ *  this class is responsible for creating a new game scene, it's called after pressing the start button in the game menu
+ * @author mohamed abubaker
  */
 public class GameViewManager {
     private Stage gameStage;
