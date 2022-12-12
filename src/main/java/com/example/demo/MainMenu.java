@@ -241,7 +241,6 @@ public class MainMenu {
     }
 
     private void createLogo(){
-
         Text logo = new Text("2048");
         logo.setFont(Font.font(35));
         logo.setLayoutX(600);
@@ -255,7 +254,6 @@ public class MainMenu {
      * and whenever it's called, it displays the corresponding sub scene
      */
     private void showSubScene(MenuSubScene subScene){
-
         if(sceneToHide !=null){
             sceneToHide.moveSubScene();
         }

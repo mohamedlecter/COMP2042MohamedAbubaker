@@ -25,11 +25,18 @@ class Directions {
         LENGTH = (HEIGHT - ((n + 1) * distanceBetweenCells)) / (double) n;
     }
 
+    /**
+     *
+     * @return the length
+     */
     static double getLENGTH() {
         return LENGTH;
     }
 
-    public void randomFillNumber(int turn) {
+    /**
+     * it randomly generates cells
+     */
+    public void randomFillNumber() {
 
         Cell[][] emptyCells = new Cell[n][n];
         int a = 0;
@@ -76,6 +83,10 @@ class Directions {
         }
     }
 
+    /**
+     * checks if it has empty cells
+     * @return -1
+     */
     public int  haveEmptyCell() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -88,6 +99,13 @@ class Directions {
         return -1;
     }
 
+    /**
+     *
+     * @param i coordinate i
+     * @param j coordinate j
+     * @param direct left, right, up, down
+     * @return coordinate
+     */
     public int passDestination(int i, int j, char direct) {
         int coordinate = j;
         if (direct == 'l') {
@@ -141,6 +159,9 @@ class Directions {
         return -1;
     }
 
+    /**
+     * moves the cell left
+     */
     public void moveLeft() {
         for (int i = 0; i < n; i++) {
             for (int j = 1; j < n; j++) {
@@ -152,6 +173,9 @@ class Directions {
         }
     }
 
+    /**
+     * moves the cell right
+     */
     public void moveRight() {
         for (int i = 0; i < n; i++) {
             for (int j = n - 1; j >= 0; j--) {
@@ -163,6 +187,9 @@ class Directions {
         }
     }
 
+    /**
+     * moves the cell up
+     */
     public void moveUp() {
         for (int j = 0; j < n; j++) {
             for (int i = 1; i < n; i++) {
@@ -175,6 +202,9 @@ class Directions {
 
     }
 
+    /**
+     * moves the cell down
+     */
     public void moveDown() {
         for (int j = 0; j < n; j++) {
             for (int i = n - 1; i >= 0; i--) {
@@ -197,15 +227,6 @@ class Directions {
         return false;
     }
 
-    public void moveHorizontally(int i, int j, int des, int sign) {
-        if (isValidDesH(i, j, des, sign)) {
-            cells[i][j].adder(cells[i][des + sign]);
-            cells[i][des].setModify(true);
-        } else if (des != j) {
-            cells[i][j].changeCell(cells[i][des]);
-        }
-    }
-
     public boolean isValidDesV(int i, int j, int des, int sign) {
         if (des + sign < n && des + sign >= 0)
             if (cells[des + sign][j].getNumber() == cells[i][j].getNumber() && !cells[des + sign][j].getModify()
@@ -215,6 +236,29 @@ class Directions {
         return false;
     }
 
+    /**
+     * moves the cell horizontally
+     * @param i coordinate i
+     * @param j coordinate j
+     * @param des destination
+     * @param sign sign
+     */
+    public void moveHorizontally(int i, int j, int des, int sign) {
+        if (isValidDesH(i, j, des, sign)) {
+            cells[i][j].adder(cells[i][des + sign]);
+            cells[i][des].setModify(true);
+        } else if (des != j) {
+            cells[i][j].changeCell(cells[i][des]);
+        }
+    }
+
+    /**
+     * moves the cell vertically
+     * @param i coordinate i
+     * @param j coordinate j
+     * @param des destination
+     * @param sign sign
+     */
     public void moveVertically(int i, int j, int des, int sign) {
         if (isValidDesV(i, j, des, sign)) {
             cells[i][j].adder(cells[des + sign][j]);
@@ -224,6 +268,12 @@ class Directions {
         }
     }
 
+    /**
+     * check if the cells have the same numbers
+     * @param i coordinate i
+     * @param j coordinate j
+     * @return false if it doesn't check the if conditions
+     */
     public boolean haveSameNumberNearly(int i, int j) {
         if (i < n - 1 && j < n - 1) {
             if (cells[i + 1][j].getNumber() == cells[i][j].getNumber())
@@ -234,6 +284,10 @@ class Directions {
         return false;
     }
 
+    /**
+     * checks if the cells can not move anymore
+     * @return true if there is nothing to sum and no cells to be randomly generated
+     */
     public boolean canNotMove() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -245,6 +299,9 @@ class Directions {
         return true;
     }
 
+    /**
+     * sums the cells to be added to the score
+     */
     public void sumCellNumbersToScore() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {

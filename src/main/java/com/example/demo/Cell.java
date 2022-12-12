@@ -23,6 +23,13 @@ public class Cell {
         return modify;
     }
 
+    /**
+     *
+     * @param x x position of the cell
+     * @param y y position of the cell
+     * @param scale the scale of the cell(height and width)
+     * @param root the root
+     */
     Cell(double x, double y, double scale, Group root) {
         rectangle = new Rectangle();
         rectangle.setX(x);
@@ -37,10 +44,18 @@ public class Cell {
         root.getChildren().add(rectangle);
     }
 
+    /**
+     *
+     * @param textClass the class of the text
+     */
     void setTextClass(Text textClass) {
         this.textClass = textClass;
     }
 
+    /**
+     *
+     * @param cell which cell needs to be changed
+     */
     void changeCell(Cell cell) {
         TextMaker.changeTwoText(textClass, cell.getTextClass());
         root.getChildren().remove(cell.getTextClass());
@@ -56,6 +71,10 @@ public class Cell {
         cell.setColorByNumber(cell.getNumber());
     }
 
+    /**
+     *
+     * @param cell which cell to add
+     */
     void adder(Cell cell) {
         cell.getTextClass().setText((cell.getNumber() + this.getNumber()) + "");
         textClass.setText("0");
@@ -64,6 +83,10 @@ public class Cell {
         setColorByNumber(getNumber());
     }
 
+    /**
+     * it sets the color of the cell by its number
+     * @param number the number of the cell
+     */
     void setColorByNumber(int number) {
         switch (number) {
             case 0:
@@ -105,17 +128,34 @@ public class Cell {
 
     }
 
+    /**
+     *
+     * @return a rectangle in value of x
+     */
     double getX() {
         return rectangle.getX();
     }
 
+    /**
+     *
+     * @return a rectangle in value of y
+     */
     double getY() {
         return rectangle.getY();
     }
 
+    /**
+     *
+     * @return the number of the cell
+     */
     int getNumber() {
         return Integer.parseInt(textClass.getText());
     }
+
+    /**
+     *
+     * @return the class text
+     */
     private Text getTextClass() {
         return textClass;
     }

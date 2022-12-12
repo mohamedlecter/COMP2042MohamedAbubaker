@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,6 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.*;
@@ -25,7 +27,18 @@ import javafx.stage.Stage;
  */
 class GameScene extends Directions {
     static Label scoreLabel = new Label();
+    private Label timerLabel;
+    public static long startTime;
+    public static AnimationTimer timer;
 
+    /**
+     *
+     * @param gameScene indicates the game scene that will be shown in the game
+     * @param root indicate the group root
+     * @param primaryStage the primary stage of the game.
+     * @param endGameScene end game scene (which is shown after the game)
+     * @param endGameRoot end game root
+     */
     void game(Scene gameScene, Group root, Stage primaryStage, Scene endGameScene, Group endGameRoot) {
         this.root = root;
         for (int i = 0; i < n; i++) {
@@ -42,6 +55,23 @@ class GameScene extends Directions {
         titleOfGame.setFont(Font.font( "Calibri", FontWeight.BOLD, 50));
         titleOfGame.relocate(100, 80);
 
+        // Create label to display the timer
+        timerLabel = new Label("Timer: 0 seconds");
+        timerLabel.setFont(Font.font( "Calibri", FontWeight.BOLD, 20));
+        timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                // Calculate the time elapsed and update the label
+                long elapsedTime = System.currentTimeMillis() - startTime;
+                timerLabel.setText("Timer: " + elapsedTime / 1000 + " seconds");
+                System.out.println(elapsedTime / 1000);
+            }
+        };
+
+        VBox layout = new VBox();
+        layout.getChildren().addAll(timerLabel);
+        layout.relocate(400, 80);
+        root.getChildren().add(layout);
 
         // Creates score box in the shape of a rectangle.
         Rectangle scoreBox = new Rectangle(140,90);
@@ -68,14 +98,14 @@ class GameScene extends Directions {
         scoreCounterText.setTextAlignment(TextAlignment.CENTER);
         root.getChildren().add(scoreCounterText);
 
-        Button settingsButton = new Button("Settings");
-        settingsButton.setFocusTraversable(false);
-        settingsButton.setLayoutX(300);
-        settingsButton.setLayoutY(50);
-        settingsButton.setOnAction(e ->{
-            settingsScreen();
-        });
-        root.getChildren().add(settingsButton);
+//        Button settingsButton = new Button("Settings");
+//        settingsButton.setFocusTraversable(false);
+//        settingsButton.setLayoutX(300);
+//        settingsButton.setLayoutY(50);
+//        settingsButton.setOnAction(e ->{
+//            settingsScreen();
+//        });
+//        root.getChildren().add(settingsButton);
 
         Button helpButton = new Button("Help");
         helpButton.setFocusTraversable(false);
@@ -94,6 +124,8 @@ class GameScene extends Directions {
         resetGameButton.setOnAction(e ->{
             GameViewManager gameManager = new GameViewManager();
             gameManager.createNewGame(primaryStage);
+            startTime = System.currentTimeMillis();
+            timer.start();
         });
 
         Button loadButton = new Button("Load");
@@ -110,17 +142,18 @@ class GameScene extends Directions {
 
         //Puts all the ALT buttons in an HBox on the bottom of the stage.
         HBox buttons = new HBox(115);
-        buttons.getChildren().addAll( helpButton, loadButton, saveButton, resetGameButton, exitButton);
+        buttons.getChildren().addAll(helpButton, loadButton, saveButton, resetGameButton, exitButton);
         buttons.setLayoutX(230);
         buttons.setLayoutY(690);
         root.getChildren().add(buttons);
 
-
-        randomFillNumber(1);
-        randomFillNumber(1);
+        // creates two number in random cells
+        randomFillNumber();
+        randomFillNumber();
         gameScene.addEventHandler(KeyEvent.KEY_RELEASED, key ->{
                 Platform.runLater(() -> {
                     int haveEmptyCell;
+                    // movements controller
                     if (key.getCode() == KeyCode.DOWN) {
                         GameScene.this.moveDown();
                         GameScene.this.sumCellNumbersToScore();
@@ -150,11 +183,14 @@ class GameScene extends Directions {
                             score = 0;
                         }
                     } else if(haveEmptyCell == 1)
-                        GameScene.this.randomFillNumber(2);
+                        GameScene.this.randomFillNumber();
                 });
             });
     }
 
+    /**
+     * this function sets up a new screen that will be called when the user presses on help button
+     */
     public void helpScreen(){
         Stage helpScreen = new Stage();
 
@@ -170,14 +206,17 @@ class GameScene extends Directions {
         BorderPane helpSizing = new BorderPane();
         helpSizing.setCenter(help);
 
-        Scene helpScene = new Scene(helpSizing);				// Create a scene.
-        helpScreen.setResizable(false);				// Sets the output to not resizeable.
-        helpScreen.setTitle("Help and Instructions");	// Set the stage title.
-        helpScreen.setHeight(300);
+        Scene helpScene = new Scene(helpSizing); // Create a scene.
+        helpScreen.setResizable(false); // Sets the output to not resizeable.
+        helpScreen.setTitle("Help and Instructions"); // Set the stage title.
+        helpScreen.setHeight(300); // sets the height and width of the scene
         helpScreen.setWidth(800);
-        helpScreen.setScene(helpScene);				// Put the scene in the stage.
+        helpScreen.setScene(helpScene); // Put the scene in the stage.
         helpScreen.show();
     }
+    /**
+     * this function sets up a new screen that will be called when the user presses on exit button
+     */
     public void exitScreen() {
         Stage exitScreen = new Stage();
 
@@ -190,6 +229,7 @@ class GameScene extends Directions {
         closeBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                timer.stop();
                 exitScreen.close();
                 System.exit(0);
             }
@@ -219,7 +259,9 @@ class GameScene extends Directions {
         exitScreen.setScene(mssgScene);
         exitScreen.show();
     }
-
+    /**
+     * this function sets up a new screen that will be called when the user presses on settings button
+     */
     public void settingsScreen() {
         Stage settingsScreen = new Stage();
 
@@ -232,8 +274,18 @@ class GameScene extends Directions {
         playBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                String fileName = "";
-                playSound(fileName);
+//                MediaPlayer mediaPlayer = new MediaPlayer();
+//                String musicFile = "Megalovania.mp3";     // For example
+//
+//                Media sound = null;
+//                try {
+//                    sound = new Media(getClass().getResource(musicFile).toURI().toString());
+//                } catch (URISyntaxException e) {
+//                    e.printStackTrace();
+//                }
+//                MediaPlayer mediaPlayer = new MediaPlayer(sound);
+//                mediaPlayer.play();
+
             }
         });
         BorderPane settingsSizing = new BorderPane();
@@ -241,12 +293,12 @@ class GameScene extends Directions {
         settingsSizing.setLeft(playBtn);
         settingsSizing.setRight(volumeSlider);
 
-        Scene settingsScene = new Scene(settingsSizing);				// Create a scene.
-        settingsScreen.setResizable(false);				// Sets the output to not resizeable.
-        settingsScreen.setTitle("Settings");	// Set the stage title.
+        Scene settingsScene = new Scene(settingsSizing);
+        settingsScreen.setResizable(false);
+        settingsScreen.setTitle("Settings");
         settingsScreen.setHeight(300);
         settingsScreen.setWidth(800);
-        settingsScreen.setScene(settingsScene);				// Put the scene in the stage.
+        settingsScreen.setScene(settingsScene);
         settingsScreen.show();
     }
     private void playSound(String fileName){

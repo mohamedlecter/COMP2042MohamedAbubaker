@@ -25,7 +25,7 @@ public class EndGame {
 
     /**
      *
-     * @return
+     * @return singleInstance
      */
     public static EndGame getInstance(){
         if(singleInstance == null)
@@ -33,6 +33,13 @@ public class EndGame {
         return singleInstance;
     }
 
+    /**
+     *
+     * @param endGameScene end game scene
+     * @param root root of the game
+     * @param primaryStage the primary stage of the game
+     * @param score the score of the game
+     */
     public void endGameShow(Scene endGameScene, Group root, Stage primaryStage, long score){
         /**
          * this sets the background color to be the same user's choice
@@ -59,6 +66,7 @@ public class EndGame {
         resetGameButton.setOnAction(e ->{
             Main newGame = new Main();
             try {
+                primaryStage.close();
                 newGame.start(primaryStage);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);

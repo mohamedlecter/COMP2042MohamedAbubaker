@@ -34,13 +34,19 @@ public class MainMenuSubScence{
     private static final String BUTTON_STYLE = "-fx-background-color: black; -fx-text-fill: white";
     private static String userName;
 
+    /**
+     *
+     * @param mainPane main pane of the menu scene
+     * @param mainStage main stage of the menu scene
+     */
+
     public MainMenuSubScence(AnchorPane mainPane, Stage mainStage){
         createSubScenes(mainPane, mainStage);
     }
     /**
      * this function works as a container for all the sub scenes where it takes these param:
-     * @param mainPane
-     * @param mainStage
+     * @param mainPane main pane of the menu scene
+     * @param mainStage main stage of the menu scene
      */
     public static void createSubScenes(AnchorPane mainPane, Stage mainStage){
         createStartGameSubScene(mainPane, mainStage);
@@ -155,6 +161,9 @@ public class MainMenuSubScence{
                 if (userName!= null){
                     GameViewManager gameManager = new GameViewManager();
                     gameManager.createNewGame(mainStage);
+                    GameScene time = new GameScene();
+                    GameScene.startTime = System.currentTimeMillis();
+                    GameScene.timer.start();
                 } else {
                     System.out.println("Enter your user name");
                 }
@@ -241,7 +250,6 @@ public class MainMenuSubScence{
      * this function creates the credits sub scene where it takes
      * @param mainPane -> as params, when creating the credits sub scene, it'll be added to the main pane
      */
-
     private static void createCreditsSubScene(AnchorPane mainPane){
         creditsSubScene = new MenuSubScene();
         mainPane.getChildren().add(creditsSubScene);

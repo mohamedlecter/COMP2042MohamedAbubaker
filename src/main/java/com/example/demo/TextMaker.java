@@ -20,6 +20,14 @@ class TextMaker {
         return singleInstance;
     }
 
+    /**
+     *
+     * @param input the number of the cell
+     * @param xCell x coordinate of the cell
+     * @param yCell y coordinate of the cell
+     * @param root root
+     * @return text
+     */
     Text madeText(String input, double xCell, double yCell, Group root) {
         double length = GameScene.getLENGTH();
         double fontSize = (3 * length) / 7.0;
@@ -30,6 +38,12 @@ class TextMaker {
 
         return text;
     }
+
+    /**
+     *
+     * @param first first text
+     * @param second second text
+     */
 
     static void changeTwoText(Text first, Text second) {
         String temp;

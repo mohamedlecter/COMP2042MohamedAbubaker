@@ -23,16 +23,29 @@ public class GameViewManager {
     private Group gameRoot = new Group();
     private Scene gameScene = new Scene(gameRoot, GAME_WIDTH, GAME_HEIGHT, Color.rgb(189, 177, 92));
 
-
+    /**
+     *
+     * @param gameScene the game scene
+     */
     public void setGameScene(Scene gameScene) {
             this.gameScene = gameScene;
         }
+
+    /**
+     *
+     * @param gameRoot the game root
+     */
     public void setGameRoot(Group gameRoot) {
             this.gameRoot = gameRoot;
         }
 
     public GameViewManager(){
     }
+
+    /**
+     *
+     * @param menuStage menu stage
+     */
     public void createNewGame(Stage menuStage){
         this.menuStage = menuStage;
         this.menuStage.hide();
