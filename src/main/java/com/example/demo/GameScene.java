@@ -29,6 +29,7 @@ class GameScene extends Directions {
     static Label scoreLabel = new Label();
     private Label timerLabel;
     public static long startTime;
+    public static long elapsedTime;
     public static AnimationTimer timer;
 
     /**
@@ -62,7 +63,7 @@ class GameScene extends Directions {
             @Override
             public void handle(long now) {
                 // Calculate the time elapsed and update the label
-                long elapsedTime = System.currentTimeMillis() - startTime;
+                elapsedTime = System.currentTimeMillis() - startTime;
                 timerLabel.setText("Timer: " + elapsedTime / 1000 + " seconds");
                 System.out.println(elapsedTime / 1000);
             }
