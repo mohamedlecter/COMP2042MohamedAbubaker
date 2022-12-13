@@ -33,7 +33,7 @@ class TextMaker {
         double fontSize = (3 * length) / 7.0;
         Text text = new Text(input);
         text.setFont(Font.font(fontSize));
-        text.relocate((xCell + 270), (yCell + 220));
+        text.relocate((xCell + 270), (yCell + 120));
         text.setFill(Color.WHITE);
 
         return text;

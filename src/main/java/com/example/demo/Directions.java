@@ -2,7 +2,10 @@ package com.example.demo;
 
 import javafx.scene.Group;
 import javafx.scene.text.Text;
+
 import java.util.Random;
+
+import static com.example.demo.MainMenuSubScence.cellNum;
 
 
 /**
@@ -13,7 +16,7 @@ import java.util.Random;
 class Directions {
     public final static int distanceBetweenCells = 15;
     public static int HEIGHT = 500;
-    public static int n = 4;
+    public static int n = cellNum;
     public static double LENGTH = 100;
     public TextMaker textMaker = TextMaker.getSingleInstance();
     public Cell[][] cells = new Cell[n][n];
@@ -24,7 +27,6 @@ class Directions {
         n = number;
         LENGTH = (HEIGHT - ((n + 1) * distanceBetweenCells)) / (double) n;
     }
-
     /**
      *
      * @return the length

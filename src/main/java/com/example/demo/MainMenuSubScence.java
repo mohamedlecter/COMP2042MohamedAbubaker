@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,6 +31,7 @@ public class MainMenuSubScence{
     static MenuSubScene creditsSubScene;
     static MenuSubScene helpSubScene;
     static MenuSubScene scoreSubScene;
+    public static int cellNum;
     static File file = new File("D:\\Uni\\Y2\\Software Maintenance\\src\\main\\java\\com\\example\\demo\\data.txt");
     private static final String BUTTON_STYLE = "-fx-background-color: black; -fx-text-fill: white";
     private static String userName;
@@ -64,9 +66,9 @@ public class MainMenuSubScence{
         createStartGameSubScene = new MenuSubScene();
         mainPane.getChildren().add(createStartGameSubScene);
 
-        InfoLable helpLabel = new InfoLable("LOGIN");
-        helpLabel.setLayoutX(120);
-        helpLabel.setLayoutY(20);
+        InfoLable loginLabel = new InfoLable("LOGIN");
+        loginLabel.setLayoutX(120);
+        loginLabel.setLayoutY(20);
 
         Label colorLabel = new Label("Pick you're desired theme ");
         colorLabel.setLayoutX(150);
@@ -140,7 +142,38 @@ public class MainMenuSubScence{
             }
         });
         grid.getChildren().add(clear);
-        createStartGameSubScene.getPane().getChildren().addAll(helpLabel,colorLabel, colorPicker, grid, startBtn(mainSatge));
+
+        Label modeLabel = new Label("Pick you're mode ");
+        modeLabel.setLayoutX(150);
+        modeLabel.setLayoutY(255);
+
+        Button easyModeBtn = new Button("Easy");
+        easyModeBtn.relocate(150, 280);
+        easyModeBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                cellNum = 3;
+            }
+        });
+
+        Button mediumModeBtn = new Button("Medium");
+        mediumModeBtn.relocate(200, 280);
+        mediumModeBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                cellNum = 4;
+            }
+        });
+
+        Button hardModeBtn = new Button("Hard");
+        hardModeBtn.relocate(270, 280);
+        hardModeBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+               cellNum = 5;
+            }
+        });
+        createStartGameSubScene.getPane().getChildren().addAll(loginLabel,colorLabel, colorPicker, grid, modeLabel, easyModeBtn, mediumModeBtn, hardModeBtn, startBtn(mainSatge));
 
     }
 
@@ -208,7 +241,6 @@ public class MainMenuSubScence{
                         .append(" - ")
                         .append(leaderBoardEntry.getScore())
                         .append("\n");
-                System.out.println(leaderBoardEntry.getScore());
 //                toDo ->  check if leaderBoardEntry.getScore() is empty i.e,
 //                 user exits the in the middle of the game and the score is not saved, then display the score as not saved
             }

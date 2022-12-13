@@ -7,21 +7,27 @@ package com.example.demo;
 public class ScoreLeaderBoard implements Comparable {
     String name;
     int score;
-
-    /**
-     *
-     * @return the name of the user
-     */
-    public String getName() {
-        return name;
-    }
-
+    int time;
     /**
      *
      * @param name sets the name of the user
      */
     public void setName(String name) {
         this.name = name;
+    }
+    /**
+     *
+     * @param score sets the score
+     */
+    public void setScore(int score) {
+        this.score = score;
+    }
+    /**
+     *
+     * @param time sets the time
+     */
+    public void setTime(int time) {
+        this.time = time;
     }
 
     /**
@@ -31,13 +37,18 @@ public class ScoreLeaderBoard implements Comparable {
     public int getScore() {
         return score;
     }
-
     /**
      *
-     * @param score sets the score
+     * @return the name of the user
      */
-    public void setScore(int score) {
-        this.score = score;
+    public String getName() {
+        return name;
+    }
+    /**
+     * @return the time
+     */
+    public int getTime() {
+        return time;
     }
 
     @Override

@@ -37,7 +37,7 @@ public class Cell {
         rectangle.setHeight(scale);
         rectangle.setWidth(scale);
         rectangle.setLayoutX(250);
-        rectangle.setLayoutY(200);
+        rectangle.setLayoutY(100);
         this.root = root;
         rectangle.setFill(Color.rgb(224, 226, 226, 0.5));
         this.textClass = TextMaker.getSingleInstance().madeText("0", x, y, root);

@@ -1,10 +1,8 @@
 package com.example.demo;
 
-import org.testng.annotations.Test;
-
 import static com.example.demo.GameScene.elapsedTime;
 import static com.example.demo.GameScene.timer;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GameSceneTest {
 //    @Test

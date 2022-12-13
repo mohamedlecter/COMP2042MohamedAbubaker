@@ -22,6 +22,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
+import java.io.File;
 /**
  * @author mohamed abubaker-modified
  */
@@ -31,6 +32,8 @@ class GameScene extends Directions {
     public static long startTime;
     public static long elapsedTime;
     public static AnimationTimer timer;
+    static File file = new File("D:\\Uni\\Y2\\Software Maintenance\\src\\main\\java\\com\\example\\demo\\data.txt");
+
 
     /**
      *
@@ -49,7 +52,6 @@ class GameScene extends Directions {
             }
 
         }
-
         Text titleOfGame = new Text();
         root.getChildren().add(titleOfGame);
         titleOfGame.setText("2048");
@@ -65,7 +67,6 @@ class GameScene extends Directions {
                 // Calculate the time elapsed and update the label
                 elapsedTime = System.currentTimeMillis() - startTime;
                 timerLabel.setText("Timer: " + elapsedTime / 1000 + " seconds");
-                System.out.println(elapsedTime / 1000);
             }
         };
 
