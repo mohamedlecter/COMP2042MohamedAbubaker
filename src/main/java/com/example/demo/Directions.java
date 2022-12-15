@@ -249,6 +249,7 @@ class Directions {
         if (isValidDesH(i, j, des, sign)) {
             cells[i][j].adder(cells[i][des + sign]);
             cells[i][des].setModify(true);
+            sumCellNumbersToScore();
         } else if (des != j) {
             cells[i][j].changeCell(cells[i][des]);
         }
@@ -265,6 +266,7 @@ class Directions {
         if (isValidDesV(i, j, des, sign)) {
             cells[i][j].adder(cells[des + sign][j]);
             cells[des][j].setModify(true);
+            sumCellNumbersToScore();
         } else if (des != i) {
             cells[i][j].changeCell(cells[des][j]);
         }

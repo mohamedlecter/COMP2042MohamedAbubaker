@@ -5,20 +5,17 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.RadioButton;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
@@ -33,8 +30,6 @@ class GameScene extends Directions {
     public static long elapsedTime;
     public static AnimationTimer timer;
     static File file = new File("D:\\Uni\\Y2\\Software Maintenance\\src\\main\\java\\com\\example\\demo\\data.txt");
-
-
     /**
      *
      * @param gameScene indicates the game scene that will be shown in the game
@@ -61,6 +56,7 @@ class GameScene extends Directions {
         // Create label to display the timer
         timerLabel = new Label("Timer: 0 seconds");
         timerLabel.setFont(Font.font( "Calibri", FontWeight.BOLD, 20));
+        timerLabel.setTextFill(Color.BLACK);
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -75,39 +71,27 @@ class GameScene extends Directions {
         layout.relocate(400, 80);
         root.getChildren().add(layout);
 
-        // Creates score box in the shape of a rectangle.
-        Rectangle scoreBox = new Rectangle(140,90);
-        scoreBox.setFill(Color.GRAY);
-        scoreBox.setArcWidth(10);
-        scoreBox.setArcHeight(10);
-
-
-        // Adds the score label on top of the scoreBox rectangle.
-        StackPane scoreBoxAndTitle = new StackPane();
-        scoreBoxAndTitle.getChildren().addAll(scoreBox, scoreLabel);
-        scoreBoxAndTitle.relocate(800, 40);
-        root.getChildren().add(scoreBoxAndTitle);
-
         // Sets the font and alignment for the score Label.
-        scoreLabel.setFont(Font.font("Calibri", FontWeight.BOLD, 25));
+        scoreLabel.setFont(Font.font("Calibri", FontWeight.BOLD, 30));
         scoreLabel.setText("Score\n");
-        scoreLabel.setAlignment(Pos.CENTER);
-        scoreLabel.setTextAlignment(TextAlignment.CENTER);
+        scoreLabel.setTextFill(Color.BLACK);
+        scoreLabel.relocate(900, 80);
+        root.getChildren().add(scoreLabel);
+
         Text scoreCounterText = new Text();
         scoreCounterText.setFont(Font.font(20));
         scoreCounterText.setText("0");
-        scoreCounterText.relocate(855, 95);
+        scoreCounterText.relocate(900, 110);
         scoreCounterText.setTextAlignment(TextAlignment.CENTER);
         root.getChildren().add(scoreCounterText);
 
-//        Button settingsButton = new Button("Settings");
-//        settingsButton.setFocusTraversable(false);
-//        settingsButton.setLayoutX(300);
-//        settingsButton.setLayoutY(50);
-//        settingsButton.setOnAction(e ->{
-//            settingsScreen();
-//        });
-//        root.getChildren().add(settingsButton);
+        Button settingsButton = new Button("Settings");
+        settingsButton.setFocusTraversable(false);
+        settingsButton.setLayoutX(300);
+        settingsButton.setLayoutY(50);
+        settingsButton.setOnAction(e ->{
+            settingsScreen();
+        });
 
         Button helpButton = new Button("Help");
         helpButton.setFocusTraversable(false);
@@ -144,7 +128,7 @@ class GameScene extends Directions {
 
         //Puts all the ALT buttons in an HBox on the bottom of the stage.
         HBox buttons = new HBox(115);
-        buttons.getChildren().addAll(helpButton, loadButton, saveButton, resetGameButton, exitButton);
+        buttons.getChildren().addAll(helpButton, loadButton, saveButton, settingsButton, resetGameButton, exitButton);
         buttons.setLayoutX(230);
         buttons.setLayoutY(690);
         root.getChildren().add(buttons);
@@ -158,24 +142,17 @@ class GameScene extends Directions {
                     // movements controller
                     if (key.getCode() == KeyCode.DOWN) {
                         GameScene.this.moveDown();
-                        GameScene.this.sumCellNumbersToScore();
-                        scoreCounterText.setText(String.valueOf(score));
                     } else if (key.getCode() == KeyCode.UP) {
                         GameScene.this.moveUp();
-                        GameScene.this.sumCellNumbersToScore();
-                        scoreCounterText.setText(String.valueOf(score));
                     } else if (key.getCode() == KeyCode.LEFT) {
                         GameScene.this.moveLeft();
-                        GameScene.this.sumCellNumbersToScore();
-                        scoreCounterText.setText(String.valueOf(score));
                     } else if (key.getCode() == KeyCode.RIGHT) {
                         GameScene.this.moveRight();
-                        GameScene.this.sumCellNumbersToScore();
-                        scoreCounterText.setText(String.valueOf(score));
                     }
                     else {
                         return;
                     }
+                    scoreCounterText.setText(String.valueOf(score));
                     haveEmptyCell = GameScene.this.haveEmptyCell();
                     if (haveEmptyCell == -1) {
                         if (GameScene.this.canNotMove()) {
@@ -267,44 +244,26 @@ class GameScene extends Directions {
     public void settingsScreen() {
         Stage settingsScreen = new Stage();
 
-        Label settings = new Label("Settings");
-        settings.setFont(Font.font("Calibri", FontWeight.BOLD, FontPosture.ITALIC, 20));
+        Label audioLabel = new Label("Audio");
+        audioLabel.setFont(Font.font("Calibri", FontWeight.BOLD, FontPosture.ITALIC, 20));
+        RadioButton audioOn = new RadioButton("On");
+        RadioButton audioOff= new RadioButton("Off");
 
-        Button playBtn = new Button("PLAY");
+        BorderPane options = new BorderPane();
+        options.setLeft(audioOn);
+        options.setRight(audioOff);
 
-        Slider volumeSlider = new Slider();
-        playBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-//                MediaPlayer mediaPlayer = new MediaPlayer();
-//                String musicFile = "Megalovania.mp3";     // For example
-//
-//                Media sound = null;
-//                try {
-//                    sound = new Media(getClass().getResource(musicFile).toURI().toString());
-//                } catch (URISyntaxException e) {
-//                    e.printStackTrace();
-//                }
-//                MediaPlayer mediaPlayer = new MediaPlayer(sound);
-//                mediaPlayer.play();
+        BorderPane settingsScreenContainer = new BorderPane();
+        settingsScreenContainer.setLeft(audioLabel);
+        settingsScreenContainer.setRight(options);
+        settingsScreenContainer.setPadding(new Insets(10, 10, 10, 10));
 
-            }
-        });
-        BorderPane settingsSizing = new BorderPane();
-        settingsSizing.setCenter(settings);
-        settingsSizing.setLeft(playBtn);
-        settingsSizing.setRight(volumeSlider);
-
-        Scene settingsScene = new Scene(settingsSizing);
+        Scene settingsScene = new Scene(settingsScreenContainer);
         settingsScreen.setResizable(false);
         settingsScreen.setTitle("Settings");
-        settingsScreen.setHeight(300);
-        settingsScreen.setWidth(800);
+        settingsScreen.setHeight(150);
+        settingsScreen.setWidth(500);
         settingsScreen.setScene(settingsScene);
         settingsScreen.show();
     }
-    private void playSound(String fileName){
-
-    }
-
 }

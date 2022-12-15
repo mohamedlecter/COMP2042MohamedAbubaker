@@ -26,7 +26,7 @@ import java.util.List;
  * @author mohamed abubaker
  */
 public class MainMenuSubScence{
-    public static String themeColor;
+    public static String themeColor = "0xffffffff";
     static MenuSubScene createStartGameSubScene;
     static MenuSubScene creditsSubScene;
     static MenuSubScene helpSubScene;
@@ -80,6 +80,7 @@ public class MainMenuSubScence{
         colorPicker.setLayoutY(100);
         colorPicker.setOnAction(e -> {
             themeColor = String.valueOf(colorPicker.getValue());
+            System.out.println(themeColor);
         });
         //Creating a GridPane container
         GridPane grid = new GridPane();
@@ -152,7 +153,7 @@ public class MainMenuSubScence{
         easyModeBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                cellNum = 3;
+                cellNum = 5;
             }
         });
 
@@ -170,7 +171,7 @@ public class MainMenuSubScence{
         hardModeBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-               cellNum = 5;
+               cellNum = 3;
             }
         });
         createStartGameSubScene.getPane().getChildren().addAll(loginLabel,colorLabel, colorPicker, grid, modeLabel, easyModeBtn, mediumModeBtn, hardModeBtn, startBtn(mainSatge));

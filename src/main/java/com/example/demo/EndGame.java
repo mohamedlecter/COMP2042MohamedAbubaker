@@ -1,13 +1,18 @@
 package com.example.demo;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -57,10 +62,32 @@ public class EndGame {
         scoreText.setFont(Font.font(80));
         root.getChildren().add(scoreText);
 
+        Popup popup = new Popup();
+        Label scoreLabel = new Label("Score: " + score +"");
+        scoreLabel.setStyle(" -fx-background-color: white;");
+        scoreLabel.setMinWidth(80);
+        scoreLabel.setMinHeight(50);
+        popup.getContent().add(scoreLabel);
+
+        Button popUpBtn = new Button("Pop up the score");
+        popUpBtn.setPrefSize(150,30);
+        popUpBtn.setTextFill(Color.BLACK);
+        popUpBtn.relocate(150,600);
+        popUpBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                if (!popup.isShowing()){
+                    popup.show(primaryStage);
+                }else
+                    popup.hide();
+            }
+        });
+        root.getChildren().add(popUpBtn);
+
         Button resetGameButton = new Button("TRY AGAIN");
         resetGameButton.setPrefSize(100,30);
         resetGameButton.setTextFill(Color.BLACK);
-        resetGameButton.relocate(250,600);
+        resetGameButton.relocate(350,600);
         resetGameButton.setFocusTraversable(false);
         root.getChildren().add(resetGameButton);
         resetGameButton.setOnAction(e ->{
@@ -95,8 +122,6 @@ public class EndGame {
             catch (Exception error){
                 System.out.println(error);
             }
-
-
         root.getChildren().add(quitButton);
     }
 }
