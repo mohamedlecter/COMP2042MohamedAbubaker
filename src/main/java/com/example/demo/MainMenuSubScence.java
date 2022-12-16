@@ -32,7 +32,7 @@ public class MainMenuSubScence{
     static MenuSubScene helpSubScene;
     static MenuSubScene scoreSubScene;
     public static int cellNum;
-    static File file = new File("D:\\Uni\\Y2\\Software Maintenance\\src\\main\\java\\com\\example\\demo\\data.txt");
+    static File file = new File("D:\\Uni\\Y2\\COMP2042MohamedAbubaker\\src\\main\\java\\com\\example\\demo\\data.txt");
     private static final String BUTTON_STYLE = "-fx-background-color: black; -fx-text-fill: white";
     private static String userName;
 
@@ -80,7 +80,6 @@ public class MainMenuSubScence{
         colorPicker.setLayoutY(100);
         colorPicker.setOnAction(e -> {
             themeColor = String.valueOf(colorPicker.getValue());
-            System.out.println(themeColor);
         });
         //Creating a GridPane container
         GridPane grid = new GridPane();
@@ -171,7 +170,7 @@ public class MainMenuSubScence{
         hardModeBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-               cellNum = 3;
+                cellNum = 3;
             }
         });
         createStartGameSubScene.getPane().getChildren().addAll(loginLabel,colorLabel, colorPicker, grid, modeLabel, easyModeBtn, mediumModeBtn, hardModeBtn, startBtn(mainSatge));
@@ -195,7 +194,6 @@ public class MainMenuSubScence{
                 if (userName!= null){
                     GameViewManager gameManager = new GameViewManager();
                     gameManager.createNewGame(mainStage);
-                    GameScene time = new GameScene();
                     GameScene.startTime = System.currentTimeMillis();
                     GameScene.timer.start();
                 } else {
@@ -299,7 +297,7 @@ public class MainMenuSubScence{
         credit0.setWrapText(true);
         credit0.setAlignment(Pos.CENTER);
 
-        String[]link = new String[6];
+        String[]link = new String[1];
         link[0] = "https://github.com/mohamedlecter/COMP2042MohamedAbubaker";
 
         Hyperlink link0;

@@ -23,7 +23,7 @@ import java.io.FileWriter;
  */
 public class EndGame {
     private static EndGame singleInstance = null;
-    static File file = new File("D:\\Uni\\Y2\\Software Maintenance\\src\\main\\java\\com\\example\\demo\\data.txt");
+    static File file = new File("D:\\Uni\\Y2\\COMP2042MohamedAbubaker\\src\\main\\java\\com\\example\\demo\\data.txt");
 
     private EndGame(){
     }
@@ -91,8 +91,8 @@ public class EndGame {
         resetGameButton.setFocusTraversable(false);
         root.getChildren().add(resetGameButton);
         resetGameButton.setOnAction(e ->{
-            Main newGame = new Main();
             try {
+                Main newGame = new Main();
                 primaryStage.close();
                 newGame.start(primaryStage);
             } catch (Exception ex) {

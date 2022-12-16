@@ -11,7 +11,7 @@ The program was programmed using Intellij, to compile it in intellij, click on e
 3. Renamed some classes and methods to make more sense.
 4. Bug fix 
    * there was a bug in the score where it gets added whenever any key is presses
-   * there was a bug that any kwy presses in the keyboard makes a move in the game
+   * there was a bug that any key presses in the keyboard makes a move in the game
 
 
 ### **Additions**
@@ -19,6 +19,9 @@ The program was programmed using Intellij, to compile it in intellij, click on e
 1. Main menu that has:
     * Login page (where users can login and pick the desired theme, mode).
     * Leadreboard page (gets the name of the user when logging in and the score when the game ends, these values are stored in a text file).
+      * notes:
+        * there is a bug in the leaderboard, when the user quits in the middle of the game, no score gets added in the text file and then the leaderboard doesn't show any records 
+        * when testing pleases change  `static File file = new File("D:\\Uni\\Y2\\COMP2042MohamedAbubaker\\src\\main\\java\\com\\example\\demo\\data.txt");` to the new location of the file
     * Help page.
     * Credits page.
     * Exit game button.

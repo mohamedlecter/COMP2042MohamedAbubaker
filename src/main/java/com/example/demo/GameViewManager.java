@@ -17,7 +17,6 @@ public class GameViewManager {
     private static  final int GAME_HEIGHT = 750;
     private Stage menuStage;
     Group menuRoot = new Group();
-    Scene menuScene = new Scene(menuRoot, GAME_WIDTH,GAME_HEIGHT);
     Group endgameRoot = new Group();
     Scene endGameScene = new Scene(endgameRoot, GAME_WIDTH, GAME_HEIGHT, Color.rgb(250, 20, 100, 0.2));
     private Group gameRoot = new Group();
@@ -38,9 +37,6 @@ public class GameViewManager {
     public void setGameRoot(Group gameRoot) {
             this.gameRoot = gameRoot;
         }
-
-    public GameViewManager(){
-    }
 
     /**
      *

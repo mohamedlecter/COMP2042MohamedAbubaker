@@ -18,8 +18,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
-
-import java.io.File;
 /**
  * @author mohamed abubaker-modified
  */
@@ -29,7 +27,6 @@ class GameScene extends Directions {
     public static long startTime;
     public static long elapsedTime;
     public static AnimationTimer timer;
-    static File file = new File("D:\\Uni\\Y2\\Software Maintenance\\src\\main\\java\\com\\example\\demo\\data.txt");
     /**
      *
      * @param gameScene indicates the game scene that will be shown in the game
@@ -129,7 +126,7 @@ class GameScene extends Directions {
         //Puts all the ALT buttons in an HBox on the bottom of the stage.
         HBox buttons = new HBox(115);
         buttons.getChildren().addAll(helpButton, loadButton, saveButton, settingsButton, resetGameButton, exitButton);
-        buttons.setLayoutX(230);
+        buttons.setLayoutX(100);
         buttons.setLayoutY(690);
         root.getChildren().add(buttons);
 
@@ -170,7 +167,7 @@ class GameScene extends Directions {
     /**
      * this function sets up a new screen that will be called when the user presses on help button
      */
-    public void helpScreen(){
+    private void helpScreen(){
         Stage helpScreen = new Stage();
 
         Label help = new Label("Basically, 2048 presents with with a 4×4 grid. When you start the game, \n" +
@@ -241,7 +238,7 @@ class GameScene extends Directions {
     /**
      * this function sets up a new screen that will be called when the user presses on settings button
      */
-    public void settingsScreen() {
+    private void settingsScreen() {
         Stage settingsScreen = new Stage();
 
         Label audioLabel = new Label("Audio");

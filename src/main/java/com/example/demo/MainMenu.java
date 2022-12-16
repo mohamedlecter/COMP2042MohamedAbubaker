@@ -54,7 +54,7 @@ public class MainMenu {
         createLogo();
     }
     /**
-     * this function creates a start game button, on pressing it the start game sub scene is called
+     * this function creates a start game button, on pressing it the start game sub scene iRs called
      */
     private void createStartButton(){
         Button button = new Button("START NEW GAME");

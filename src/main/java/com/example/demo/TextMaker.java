@@ -3,6 +3,7 @@ package com.example.demo;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 /**
@@ -32,8 +33,8 @@ class TextMaker {
         double length = GameScene.getLENGTH();
         double fontSize = (3 * length) / 7.0;
         Text text = new Text(input);
-        text.setFont(Font.font(fontSize));
-        text.relocate((xCell + 270), (yCell + 120));
+        text.setFont(Font.font( "Calibri", FontWeight.BOLD, 25));
+        text.relocate((xCell + 265), (yCell + 120));
         text.setFill(Color.WHITE);
 
         return text;

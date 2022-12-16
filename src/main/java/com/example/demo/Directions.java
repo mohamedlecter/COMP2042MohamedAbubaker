@@ -15,18 +15,13 @@ import static com.example.demo.MainMenuSubScence.cellNum;
  */
 class Directions {
     public final static int distanceBetweenCells = 15;
-    public static int HEIGHT = 500;
-    public static int n = cellNum;
+    public int n = cellNum;
     public static double LENGTH = 100;
     public TextMaker textMaker = TextMaker.getSingleInstance();
     public Cell[][] cells = new Cell[n][n];
     public Group root;
     public long score = 0;
 
-    static void setN(int number) {
-        n = number;
-        LENGTH = (HEIGHT - ((n + 1) * distanceBetweenCells)) / (double) n;
-    }
     /**
      *
      * @return the length
@@ -39,7 +34,6 @@ class Directions {
      * it randomly generates cells
      */
     public void randomFillNumber() {
-
         Cell[][] emptyCells = new Cell[n][n];
         int a = 0;
         int b = 0;
@@ -108,7 +102,7 @@ class Directions {
      * @param direct left, right, up, down
      * @return coordinate
      */
-    public int passDestination(int i, int j, char direct) {
+    private int passDestination(int i, int j, char direct) {
         int coordinate = j;
         if (direct == 'l') {
             for (int k = j - 1; k >= 0; k--) {
@@ -229,7 +223,7 @@ class Directions {
         return false;
     }
 
-    public boolean isValidDesV(int i, int j, int des, int sign) {
+    private boolean isValidDesV(int i, int j, int des, int sign) {
         if (des + sign < n && des + sign >= 0)
             if (cells[des + sign][j].getNumber() == cells[i][j].getNumber() && !cells[des + sign][j].getModify()
                     && cells[des + sign][j].getNumber() != 0) {
@@ -245,7 +239,7 @@ class Directions {
      * @param des destination
      * @param sign sign
      */
-    public void moveHorizontally(int i, int j, int des, int sign) {
+    private void moveHorizontally(int i, int j, int des, int sign) {
         if (isValidDesH(i, j, des, sign)) {
             cells[i][j].adder(cells[i][des + sign]);
             cells[i][des].setModify(true);
@@ -262,7 +256,7 @@ class Directions {
      * @param des destination
      * @param sign sign
      */
-    public void moveVertically(int i, int j, int des, int sign) {
+    private void moveVertically(int i, int j, int des, int sign) {
         if (isValidDesV(i, j, des, sign)) {
             cells[i][j].adder(cells[des + sign][j]);
             cells[des][j].setModify(true);
@@ -306,7 +300,7 @@ class Directions {
     /**
      * sums the cells to be added to the score
      */
-    public void sumCellNumbersToScore() {
+    private void sumCellNumbersToScore() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 score += cells[i][j].getNumber();
